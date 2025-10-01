@@ -1,4 +1,4 @@
 import "./styles.css";
-import loadWeatherApp from "./pages/weatherApp";
+import landingPage from "./pages/landing-page";
 
-loadWeatherApp();
+landingPage();
