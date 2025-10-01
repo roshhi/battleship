@@ -1,0 +1,634 @@
+/* Modern-Normalize CSS reset: */
+    *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    :root {
+    line-height: 1.5;
+    }
+    h1, h2, h3, h4, h5, figure, p, ol, ul {
+    margin: 0;
+    }
+    h1, h2, h3, h4, h5 {
+        font-size: inherit;
+        font-weight: inherit;
+    }
+    img {
+        display: block;
+        max-inline-size: 100%;
+    }
+    ol[role="list"], ul[role="list"] {
+    list-style: none;
+    padding-inline: 0;
+    }
+/* Modern-Normalize CSS reset ends here */
+
+body{
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.container{
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+}
+
+/* Hero section styling starts from here */
+    .hero{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        height: 100vh;
+        background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
+    }
+
+    /* Loader styling starts from here */
+        .loader {
+            opacity: 0;
+            visibility: hidden;
+            position: absolute;
+            width: 75px;
+            height: 100px;
+            background-repeat: no-repeat;
+            background-image: linear-gradient(#DDD 50px, transparent 0),
+                            linear-gradient(#DDD 50px, transparent 0),
+                            linear-gradient(#DDD 50px, transparent 0),
+                            linear-gradient(#DDD 50px, transparent 0),
+                            linear-gradient(#DDD 50px, transparent 0);
+            background-size: 8px 100%;
+            background-position: 0px 90px, 15px 78px, 30px 66px, 45px 58px, 60px 50px;
+            animation: pillerPushUp 4s linear infinite;
+        }
+        .loader:after {
+            content: '';
+            position: absolute;
+            bottom: 10px;
+            left: 0;
+            width: 10px;
+            height: 10px;
+            background: #1a1717;
+            border-radius: 50%;
+            animation: ballStepUp 4s linear infinite;
+        }
+
+        @keyframes pillerPushUp {
+        0% , 40% , 100%{background-position: 0px 90px, 15px 78px, 30px 66px, 45px 58px, 60px 50px}
+        50% ,  90% {background-position: 0px 50px, 15px 58px, 30px 66px, 45px 78px, 60px 90px}
+        }
+
+        @keyframes ballStepUp {
+        0% {transform: translate(0, 0)}
+        5% {transform: translate(8px, -14px)}
+        10% {transform: translate(15px, -10px)}
+        17% {transform: translate(23px, -24px)}
+        20% {transform: translate(30px, -20px)}
+        27% {transform: translate(38px, -34px)}
+        30% {transform: translate(45px, -30px)}
+        37% {transform: translate(53px, -44px)}
+        40% {transform: translate(60px, -40px)}
+        50% {transform: translate(60px, 0)}
+        57% {transform: translate(53px, -14px)}
+        60% {transform: translate(45px, -10px)}
+        67% {transform: translate(37px, -24px)}
+        70% {transform: translate(30px, -20px)}
+        77% {transform: translate(22px, -34px)}
+        80% {transform: translate(15px, -30px)}
+        87% {transform: translate(7px, -44px)}
+        90% {transform: translate(0, -40px)}
+        100% {transform: translate(0, 0);}
+        }
+    /* Loader styling ends here */
+
+    .hero-container{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+        height: 95%;
+        width: 90%;
+        gap: 10px;
+    }
+    .search-bar{
+        display: flex;
+        align-items: center;
+        width: 90%;
+        height: 50px;
+        border-radius: 15px;
+        background: rgba(255,255,255,0.15); 
+    }
+    #search-textField{
+        width: 100%;
+        height: 100%;
+        border: none;
+        outline: none;
+        font-family: 'nunito',sans-serif;
+        font-weight: 600;
+        font-size: clamp(1rem,5vw,1rem);
+        padding-left: 20px;
+        border-radius: 15px;
+        border: 1px solid gainsboro;
+    }
+    .magnify-glass{
+        height: 80%;
+        fill: white;
+    }
+    .magnify-glass:hover{
+        transform: scale(1.1);
+        cursor: pointer;
+    }
+    .weather-detail-div{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 5px;
+        width: 100%;
+        height: 45%;
+        margin-bottom: 20px;
+        margin-top: 10px;
+    }
+    .weather-img{
+        width: 200px;
+        height: 200px;
+        object-fit: contain;
+    }
+    .weather-temperature{
+        font-family: 'nunito','sans-serif';
+        font-size: clamp(3.5rem,10vw,5rem);
+        padding-left: 10px;
+    }
+    .day-time{
+        display: flex;
+        align-items: center;
+        font-size: clamp(1rem,5vw,1.5rem);
+        font-family:Arial, Helvetica, sans-serif;
+        padding-left: 10px;
+        margin-bottom: 20px;
+        width: 100% ;
+    }
+    .day{
+        color: rgba(36, 34, 34, 0.786);
+    }
+    .time{
+        color: lightgray;
+        padding-left: 5px;
+    }
+    .hero-h-line{
+        height: 1px;
+        width: 80%;
+        background-color: gainsboro;
+        margin-bottom: 20px;
+    }
+    .weather-state{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: 10%;
+        margin-bottom: 20px;
+    }
+    .weather-description,.rain-condition{
+        display: flex;
+        width: 100%;
+        height: 50%;
+        gap: 15px;
+    }
+
+    .weather-state-svg,.rain-state-svg{
+        width: 25px;
+        height: 25px;
+    }
+    .hero-location{
+        width: 100%;
+        height: 15%;
+        border-radius: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: clamp(1rem,10vw,2rem);
+        background: linear-gradient(135deg, #ffafbd 0%, #ffc3a0 100%);
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        color: rgb(255, 255, 255);
+        font-family: 'nunito','sans-serif';
+        font-size: 35px;
+        font-weight: 900;
+        padding-left: 10px;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        margin-bottom: 50px;
+    }
+
+    /* Js selector classes */
+        .hide{
+            opacity: 0;
+            visibility: hidden;
+        }
+        .show{
+            visibility: visible;
+            opacity: 1;
+        }
+    /* -------- */
+
+/* Hero section styling ends here */
+
+
+/* Main section styling starts from here */
+    .main{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: clamp(120vh,100%,160vh);
+        background-color: rgb(248, 247, 250);
+    }
+    .week-title-div,.today-highlight-div{
+        width: 100%;
+        height: 10%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        font-size: clamp(1rem,10vw,2rem);
+        font-family: 'nunito','sans-serif';
+        padding-left: 30px;
+        margin-top: 20px;
+    }
+    .week-title,.today-highlight-title{
+        width: 100%;
+        font-weight: 700;
+        color: #868686;
+    }
+    .week-h-line,.today-highlight-h-line{
+        width: 230px;
+        height: 1px;
+        background-color: rgb(0, 0, 0);
+    }
+    .today-highlight-h-line{
+        width: 270px;
+    }
+    .week-forecast-container{
+        display: flex;
+        overflow-x: auto;
+        padding-left: 25px;
+        margin-top: 30px;
+        gap: 10px;
+        overflow-y: hidden; 
+        scroll-behavior: smooth;
+    }
+    .week-forecast-container::-webkit-scrollbar {
+        height: 6px; 
+    }
+    .week-forecast-container::-webkit-scrollbar-thumb {
+        background: #b4b4b2;        /* scrollbar color */
+        border-radius: 10px;
+        visibility: hidden;
+        transition: visibility 3s ease-in-out; /* smooth fade */
+    }
+    .week-forecast-container:hover::-webkit-scrollbar-thumb {
+        visibility: visible;
+        transition: visibility 3s ease-in-out; /* smooth fade */
+    }
+    .weather-card {
+        display: flex;
+        flex-direction: column;
+        flex: 0 0 auto;          /* prevents shrinking, keeps fixed width */
+        width: clamp(200px,13.4vw,13.4vw);/* card width */
+        font-family: 'nunito','sans-serif';
+        height: clamp(250px,14vw,300px);
+        padding: 16px;
+        border-radius: 12px;
+        background: white;
+        text-align: center;
+        gap: 5px;
+        margin-bottom: 10px;
+        margin-right: 30px;
+    }
+    .week-day-name{
+        font-size: clamp(1.2rem,4vw,1.5rem);
+    }
+    .week-weather-img{
+        width: 100%;
+        height: clamp(70%,100%,60%);
+        object-fit: contain;
+    }
+    .week-temp{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        font-size: clamp(1.2rem,4vw,1.2rem);
+        gap: 10px;
+    }
+    .min-temp{
+        color: gainsboro;
+    }
+
+    .daily-highlights-div{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-auto-rows: 1fr;
+        column-gap: 15px;
+        row-gap: 35px;
+        padding: 10px;
+        color: #444443;
+        margin-top: 25px;
+        margin-bottom: 25px;
+    }
+    @media (min-width: 600px) {
+        .daily-highlights-div{
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+    }
+
+    .uv-index,.wind-status,.sunrise-sunset-div,.humidity-div,.visiblity-div,.air-quality-div{
+        border-radius: 15px;
+        padding: 10px;
+        width: 100%;
+        font-family: 'Roboto', sans-serif;
+        font-weight: 1;
+        background-color: white;
+    }
+
+    /* -------------- */
+        .uv-index{
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            position: relative;
+        }
+        .uv-title{
+            font-family: 'nunito','sans-serif';
+            color: rgb(180, 180, 180);
+            font-size: clamp(1.1rem,3vw,2rem);
+            padding-left: 10px;
+            padding-top: 10px;
+        }
+        .uv-gauge {
+            height: 75px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        .uv-gauge svg{
+            position: absolute;
+            height: 100%;
+        }
+        .uv-value{
+            font-size: clamp(2rem,5vw,5rem);
+            margin-top: 25px;
+            position: absolute;
+        }
+        
+    /* -------------- */
+    
+    /* -------------- */
+        .highlights-title{
+            font-family: 'nunito','sans-serif';
+            color: rgb(180, 180, 180);
+            font-size: clamp(1.1rem,3vw,2rem);
+        }
+        .wind-speed{
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .wind-speed-value{
+            text-align: end;
+            font-size: clamp(3rem,5vw,5rem);
+        }
+        .wind-speed-unit{
+            margin-top: 10px;
+        }
+        .wind-direction{
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .wind-direction-svg{
+            fill: #487cf5;
+        }
+    /* -------------- */
+    
+    /* -------------- */
+        .sunrise svg{
+            fill: rgb(232, 222, 36);
+        }
+        .sunset svg{
+            fill: rgb(245, 192, 34);
+        }
+        .sunrise{
+            margin-top: 20px;
+        }
+        .sunset{
+            margin-top: 10px;
+        }
+        .sunrise,.sunset{
+            display: flex;
+            align-items: center;
+        }
+    /* -------------- */
+    
+    /* -------------- */
+        .humidity-value-div, .air-quality-value-div{
+            height: 60%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .humidity-bar, .air-quality-bar{
+            height: 100%;
+            border: 2px solid rgb(216, 216, 216);
+            width: 25%;
+            border-radius: 15px;
+            position: relative;
+        }
+        .humidity-bar-circle, .air-quality-bar-circle{
+            position: absolute;
+            border-radius: 50%;
+            background-color: #487cf5;
+            width: 50%;
+            aspect-ratio: 1 / 1;
+            left: 50%;  
+            transform: translateX(-50%);
+        }
+        .humidity-bar-circle{
+            top: 65%;  /* range is from 65% to 10% */
+        }
+        .air-quality-bar-circle{
+            position: absolute;
+            top: 65%;  /* range is from 65% to 10% */
+        }
+        .humidity-text,.air-quality-text{
+            font-size: clamp(2.5rem,5vw,4rem);
+        }
+        .visiblity-div{
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+        }
+        .visiblity-value{
+            font-size: clamp(2.5rem,5vw,4rem);
+        }
+     /* -------------- */
+
+     @media (min-width: 900px) {
+        html, body {
+            height: 100%;
+            min-height: 100vh;
+            background-color: rgb(255, 255, 255);
+            overflow: hidden;
+        }
+        .container{
+            display: flex;
+            flex-direction: row;
+            height: 100%;
+        }
+        .hero{
+            height: 100%;
+            margin-bottom: 0;
+            width: 35vw;
+        }
+        .main{
+            width: 65vw;
+        }
+        .week-forecast-container{
+            height: 14%;
+            width: 100%;
+        }
+        .weather-card{
+            height: 100%;
+            width: 20%;
+            justify-content: space-evenly;
+            margin: 0;
+            padding: 0;
+        }
+        .week-weather-img{
+            height: 40%;
+        }
+        .week-day-name,.week-temp{
+            font-size: medium;
+        }
+        .daily-highlights-div{
+            height: 40%;
+            row-gap: 0px;
+            padding-left: 30px;
+        }
+        .uv-index,.wind-status,.sunrise-sunset-div,.humidity-div,.visiblity-div,.air-quality-div{
+            height: 80%;
+            width: 90%;
+        }
+        .sunrise-sunset-div{
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+        }
+        .sunrise ,.sunset{
+            margin: 0;
+            gap: 10px;
+        }
+        .sunrise-sunset-div svg{
+            width: 25px;
+            height: 25px;
+        }
+        .uv-title, .highlights-title{
+            font-size: large;
+        }
+        .uv-value, .wind-speed-value,.humidity-text,.air-quality-text,.visiblity-value{
+            font-size: 2rem;
+        }
+        .humidity-bar, .air-quality-bar{
+            width: 15%;
+        }
+    }
+/* Main div styling ends here */
+
+
+
+/* Clear Day Theme */
+    .clear-theme {
+        background: linear-gradient(to bottom, #89c3fe, #1e5095);
+        color: #222;
+    }
+    .clear-theme .magnify-glass { fill: white; }
+    .clear-theme .weather-state { font-weight: 900 !important}
+    .clear-theme .weather-state svg { fill: white}
+    .clear-theme .day, .clear-theme .time,
+    .clear-theme .weather-temperature { color: #ffffff; }
+    .clear-theme .rain-condition-text{ color: #ffffff; font-family: 'nunito','sans-serif';}
+    .clear-theme .weather-condition-text,
+    .clear-theme .hero-h-line {color: white }
+    .clear-theme .hero-location { background:linear-gradient(135deg, #034295 0%, #91bafc 100%);}
+/* ------------- */
+
+/* Clouds */
+    .clouds-theme {
+        background: linear-gradient(to bottom, #757f9a, #d7dde8);
+        color: #fff;
+    }
+    .clouds-theme .weather-state svg { fill: white}
+    .clouds-theme .search-bar { background: rgba(255,255,255,0.2); }
+    .clouds-theme .magnify-glass { fill: #ffffff; }
+    .clouds-theme .weather-temperature { color: #fff; }
+    .clouds-theme .day, .clouds-theme .time,
+    .clouds-theme .weather-condition-text,
+    .clouds-theme .rain-condition-text{ color: #eee; font-family: 'nunito','sans-serif';}
+    .clouds-theme .hero-location {color:#ffffff; background: linear-gradient(135deg, #bfd4fb 0%, #757f9a 100%)};
+    .clouds-theme .hero-h-line { background: white }
+/* ------------- */
+
+
+/* Rain */
+
+    .rain-theme {
+        background: linear-gradient(to bottom, #bdc3c7, #2c3e50);
+        color: #fff;
+    }
+    .rain-theme .search-bar { background: rgba(255,255,255,0.15); }
+    .rain-theme .magnify-glass { fill: #ddd; }
+    .rain-theme .weather-temperature { color: #fff; }
+    .rain-theme .day, .rain-theme .time,
+    .rain-theme .weather-condition-text,
+    .rain-theme .rain-condition-text{ color: #eee; font-family: 'nunito','sans-serif';}
+    .rain-theme .hero-location {color:#ffffff;   background: linear-gradient(135deg, #4b6cb7 0%, #182848 100%)};
+    .rain-theme .hero-h-line { background: white }
+
+/* ------------- */
+
+/* Clear Night */
+    .night-theme {
+        background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
+        color: #fff;
+    }
+    .night-theme .search-bar { background: rgba(255,255,255,0.1); }
+    .night-theme .weather-state svg { fill: white}
+    .night-theme .magnify-glass { fill: #fff; }
+    .night-theme .weather-temperature { color: #fff; }
+    .night-theme .day,.night-theme .time,
+    .night-theme .weather-condition-text,
+    .night-theme .rain-condition-text,
+    .night-theme .weather-location { color: #eee; font-family: 'nunito','sans-serif'; }
+    .night-theme .hero-location {color:#ffffff; background: linear-gradient(135deg, #0f2027 0%, #036190 100%) };
+    .night-theme .hero-h-line { background: white }
+/* ------------- */
+
+/* ❄️ Snow */
+    .snow-theme {
+        background: linear-gradient(to bottom, #e0eafc, #cfdef3) !important;
+        color: #222;
+    }
+    .snow-theme .search-bar { background: rgba(255,255,255,0.8); }
+    .snow-theme .magnify-glass { fill: #4682b4; }
+    .snow-theme .weather-temperature { color: #222; }
+    .snow-theme .day, .snow-theme .time,
+    .snow-theme .weather-condition-text,
+    .snow-theme .rain-condition-text,
+    .snow-theme .weather-location { color: #333; font-family: 'nunito','sans-serif'; }
+    .snow-theme .hero-location {color:#ffffff;   background: linear-gradient(135deg, #e6f0ff 0%, #ffffff 100%);};
+    .snow-theme .hero-h-line { background: white }
+/* ------------- */
+
+
