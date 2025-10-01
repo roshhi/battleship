@@ -40,7 +40,64 @@ body{
     height: 100%;
 }
 .hero{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
     width: 100%;
     height: 100%;
     background: radial-gradient(circle at center, #002244, #000000);
+    position: relative;
+    padding-bottom: 25px;
+}
+.menu{
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 28%;
+    height: 50%;
+    background: linear-gradient(180deg, #0b1c2c, #000000);
+    border-radius: 25px;
+    border: 0.5px solid #ffc400;
+    border-radius: 12px;
+    box-shadow: 0 0 100px rgba(198,151,73,0.5);
+    animation: menu-glow 3s ease-in-out infinite;
+}
+@keyframes menu-glow {
+    0%   { box-shadow: 0 0 20px rgba(198,151,73,0.3); }
+    50%  { box-shadow: 0 0 80px rgba(198,151,73,0.7); }
+    100% { box-shadow: 0 0 20px rgba(198,151,73,0.3); }
+}
+.game-title{
+    font-size: clamp(3rem,5vw,6rem);
+    font-family: 'Pirata One', cursive;
+    letter-spacing: 5px;
+    color: whitesmoke;
+}
+.menu-buttons{
+    border: 2px solid greenyellow;
+    width: 50%;
+    height: 50%;
+}
+  
+
+.ships-container{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 60%;
+    padding-left: 50px;
+    padding-right: 70px;
+    /* border: 2px solid rgb(34, 255, 0); */
+}
+
+
+.ship-one{
+}
+
+.ship-two{
 }
