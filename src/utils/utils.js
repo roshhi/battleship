@@ -27,6 +27,7 @@ export function createPara(appendTo,className,text){
     const myPara = document.createElement("p");
     myPara.classList.add(className);
     myPara.textContent = text;
+    myPara.innerHTML = text;
     appendTo.appendChild(myPara);
     return myPara;
 }
