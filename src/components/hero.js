@@ -26,9 +26,17 @@ export default function hero() {
     // Creating Instruction div
     const getInstructionDiv = createDiv(getMenu,"instruction-main");
     createPara(getInstructionDiv,"instruction-text-heading","⚓ Battleship Instructions!");
-    createPara(getInstructionDiv,"instruction-text","Objective: Sink all enemy ships before they sink yours!");
-    createPara(getInstructionDiv,"instruction-text","Setup: Each player has a grid. Ships are hidden on the grid.");
+    createPara(getInstructionDiv,"instruction-text","▸ Sink all enemy ships before they sink yours!");
+    createPara(getInstructionDiv,"instruction-text","▸ Each player has a grid. Ships are hidden on it.");
+    createPara(getInstructionDiv,"instruction-text","▸ Choose a cell on the enemy grid to attack.");
+    createPara(getInstructionDiv,"instruction-text","▸ Sink all enemy ships by finding all their positions.");
+    createPara(getInstructionDiv,"instruction-text-heading","⚓ Tip");
+    createPara(getInstructionDiv,"instruction-text","▸ When you hit part of a ship, try attacking the nearby cells (up, down, left, right) to find the rest of it.")
 
+    const getInstBackBtn = createDiv(getInstructionDiv,"instruction-back-btn");
+    createPara(getInstBackBtn,"inst-back-btn-txt","Go back");
+
+    
     // Creating Settings button
     const getSettBtn = createDiv(getMenuButtons,"setting-btn");
     createPara(getSettBtn,"menu-btn-txt","Settings");
@@ -63,6 +71,14 @@ export default function hero() {
         getInstructionDiv.classList.add("show");
         getTitle.classList.add("hide");
         getMenuButtons.classList.add("hide");
+    })
+    // Adding event listner to instruction back button
+    getInstBackBtn.addEventListener("click",()=>{
+        getTitle.classList.remove("hide");
+        getMenuButtons.classList.remove("hide");
+        getBackBtn.classList.remove("show");
+        getSoundDiv.classList.remove("show");
+        getInstructionDiv.classList.remove("show");
     })
 
     // Adding event listner to back button
