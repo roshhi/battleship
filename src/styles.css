@@ -35,213 +35,222 @@ body{
     width: 100%;
     height: 100%;
 }
-.hero{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-end;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle at center, #002244, #000000);
-    position: relative;
-    padding-bottom: 25px;
-}
-.menu{
-    position: absolute;
-    top: 30%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 28%;
-    height: 50%;
-    background: linear-gradient(180deg, #0b1c2c, #000000);
-    border-radius: 25px;
-    border: 0.5px solid #ffc400;
-    border-radius: 12px;
-    box-shadow: 0 0 100px rgba(198,151,73,0.5);
-    animation: menu-glow 3s ease-in-out infinite;
-}
-@keyframes menu-glow {
-    0%   { box-shadow: 0 0 20px rgba(198,151,73,0.3); }
-    50%  { box-shadow: 0 0 80px rgba(198,151,73,0.7); }
-    100% { box-shadow: 0 0 20px rgba(198,151,73,0.3); }
-}
-.game-title{
-    font-size: clamp(3rem,5vw,6rem);
-    font-family: 'Pirata One', cursive;
-    letter-spacing: 5px;
-    color: whitesmoke;
-    height: 35%;
-    transition: opacity 1s ease, visibility 1s ease;
-    /* border: 2px solid greenyellow; */
-}
-.menu-buttons{
-    width: 50%;
-    height: 40%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    transition: opacity 1s ease, visibility 1s ease;
-    /* border: 2px solid greenyellow; */
-}
-.menu-buttons div{
-    height: 28%;
-    border: 2px solid rgb(255, 187, 0);
-    border-radius: 15px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.back-btn{
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    visibility: hidden;
-    opacity: 0;
-    font-size: clamp(1rem, 2vw, 2rem);
-    font-family: 'Pirata One', cursive;
-    color: whitesmoke;
-}
-.back-img{
-    width: 50px;
-    height: 50px;
-}
-.back-img:hover{
-    transform: scale(1.1);
-}
-.sound-main{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transform: translate(-50%,-50%);
-    width: 50%;
-    height: 100px;
-    font-size: clamp(1.5rem, 3vw, 2.5rem);
-    font-family: 'Pirata One', cursive;
-    color: whitesmoke;
-    gap: 10px;
-    visibility: hidden;
-    opacity: 0;
-    border: 1px solid rgb(255, 187, 0);
-    border-radius: 15px;
-}
-.toggle{
-    width: 40%;
-    height: 50px;
-    border-radius: 15px;
-    padding: 2px;
-    border: 2px solid rgb(255, 187, 0);
-    display: flex;
-    margin-left: 10px;
-}
-.toggle-circle{
-    width: 40%;
-    height: 90%;
-    border-radius: 50%;
-    background-color: #f5f5f5;
-}
-.instruction-main{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    width: 90%;
-    height: 80%;
-    border: 1px solid rgb(223, 223, 223);
-    visibility: hidden;
-    opacity: 0;
-    border-radius: 15px;
-    padding: 10px;
-    color: whitesmoke;
-}
-.instruction-text-heading{
-    font-family: 'Orbitron', cursive;
-    font-size: clamp(1.2rem, 3vw, 2.2rem);
-}
-.instruction-text{
-    font-family: 'nunito', cursive;
-    font-size: clamp(1rem, 1vw, 1.2rem);
-    padding-top: 10px;
-}
-.active {
-    justify-content: flex-end;
-}
-.menu-btn-txt {
-    font-family: 'Pirata One', 'Cinzel Decorative', serif;
-    font-size: clamp(1.5rem, 2vw, 2.5rem);
-    font-weight: 700;
-    color: #f5f5f5;
-    letter-spacing: 2px;
-    transition: transform 0.25s ease, text-shadow 0.25s ease;
-    display: block;
-}
-.menu-buttons div:hover,.toggle:hover {
-    transition: transform 0.25s ease, text-shadow 0.25s ease;
-    transform: scale(1.1) rotate(-1deg);
-    text-shadow:
-      3px 3px 0 #000,
-      6px 6px 12px rgba(0, 0, 0, 0.6),
-      0 0 25px rgba(255, 191, 0, 0.8);
-    color: #fff3c4; 
-    cursor: pointer;
-    box-shadow: 0 0 80px rgba(198,151,73,0.7);
-}
-.menu-buttons div:active {
-    transform: scale(0.9) rotate(2deg);
-}
-.ships-container{
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    height: 60%;
-    padding-left: 50px;
-    padding-right: 70px;
-}
+/* Hero section styling starts from here */
+    .hero{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-end;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle at center, #002244, #000000);
+        position: relative;
+        padding-bottom: 25px;
+    }
 
-.animate-ship-left{
-    animation: animate-from-left-right 3s;
-}
-.animate-ship-right{
-    animation: animate-from-right-left 3s;
-}
-@keyframes animate-from-left-right {
-    0%{
-        transform: translateX(-600px);
-    }
-    50%{
-        transform: translateX(50px);
-    }
-    100%{
-        transform: translateX(0px);
-    }
-}
-@keyframes animate-from-right-left {
-    0%{
-        transform: translateX(600px);
-    }
-    50%{
-        transform: translateX(-50px);
-    }
-    100%{
-        transform: translateX(0px);
-    }
-}
+    /* Menu section styling starts from here */
+        .menu{
+            position: absolute;
+            top: 30%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 28%;
+            height: 50%;
+            background: linear-gradient(180deg, #0b1c2c, #000000);
+            border-radius: 25px;
+            border: 0.5px solid #ffc400;
+            border-radius: 12px;
+            box-shadow: 0 0 100px rgba(198,151,73,0.5);
+            animation: menu-glow 3s ease-in-out infinite;
+        }
+        @keyframes menu-glow {
+            0%   { box-shadow: 0 0 20px rgba(198,151,73,0.3); }
+            50%  { box-shadow: 0 0 80px rgba(198,151,73,0.7); }
+            100% { box-shadow: 0 0 20px rgba(198,151,73,0.3); }
+        }
+        .game-title{
+            font-size: clamp(3rem,5vw,6rem);
+            font-family: 'Pirata One', cursive;
+            letter-spacing: 5px;
+            color: whitesmoke;
+            height: 35%;
+            transition: opacity 1s ease, visibility 1s ease;
+        }
+        .menu-buttons{
+            width: 50%;
+            height: 40%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: opacity 1s ease, visibility 1s ease;
+        }
+        .menu-buttons div{
+            height: 28%;
+            border: 2px solid rgb(255, 187, 0);
+            border-radius: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .menu-buttons div:hover,.toggle:hover {
+            transition: transform 0.25s ease, text-shadow 0.25s ease;
+            transform: scale(1.1) rotate(-1deg);
+            text-shadow:
+              3px 3px 0 #000,
+              6px 6px 12px rgba(0, 0, 0, 0.6),
+              0 0 25px rgba(255, 191, 0, 0.8);
+            color: #fff3c4; 
+            cursor: pointer;
+            box-shadow: 0 0 80px rgba(198,151,73,0.7);
+        }
+        .menu-buttons div:active {
+            transform: scale(0.9) rotate(2deg);
+        }
+        .menu-btn-txt {
+            font-family: 'Pirata One', 'Cinzel Decorative', serif;
+            font-size: clamp(1.5rem, 2vw, 2.5rem);
+            font-weight: 700;
+            color: #f5f5f5;
+            letter-spacing: 2px;
+            transition: transform 0.25s ease, text-shadow 0.25s ease;
+            display: block;
+        }
+        .instruction-main{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            width: 90%;
+            height: 80%;
+            border: 1px solid rgb(223, 223, 223);
+            visibility: hidden;
+            opacity: 0;
+            border-radius: 15px;
+            padding: 10px;
+            color: whitesmoke;
+        }
+        .instruction-text-heading{
+            font-family: 'Orbitron', cursive;
+            font-size: clamp(1.2rem, 3vw, 2.2rem);
+        }
+        .instruction-text{
+            font-family: 'nunito', cursive;
+            font-size: clamp(1rem, 1vw, 1.2rem);
+            padding-top: 10px;
+        }
+        .active {
+            justify-content: flex-end;
+        }
+        .back-btn{
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            visibility: hidden;
+            opacity: 0;
+            font-size: clamp(1rem, 2vw, 2rem);
+            font-family: 'Pirata One', cursive;
+            color: whitesmoke;
+        }
+        .back-img{
+            width: 50px;
+            height: 50px;
+        }
+        .back-img:hover{
+            transform: scale(1.1);
+        }
+        .sound-main{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transform: translate(-50%,-50%);
+            width: 50%;
+            height: 100px;
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            font-family: 'Pirata One', cursive;
+            color: whitesmoke;
+            gap: 10px;
+            visibility: hidden;
+            opacity: 0;
+            border: 1px solid rgb(255, 187, 0);
+            border-radius: 15px;
+        }
+        .toggle{
+            width: 40%;
+            height: 50px;
+            border-radius: 15px;
+            padding: 2px;
+            border: 2px solid rgb(255, 187, 0);
+            display: flex;
+            margin-left: 10px;
+        }
+        .toggle-circle{
+            width: 40%;
+            height: 90%;
+            border-radius: 50%;
+            background-color: #f5f5f5;
+        }
 
-.hide{
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 1s ease, visibility 1s ease;
-}
-.show{
-    opacity: 1!important;
-    visibility: visible!important;
-    transition: opacity 1s ease, visibility 1s ease !important;
-}
+    /* Menu section styling ends here */
+
+    /* Ship container styling starts from here */
+        .ships-container{
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            height: 60%;
+            padding-left: 50px;
+            padding-right: 70px;
+        }
+        .animate-ship-left{
+            animation: animate-from-left-right 3s;
+        }
+        .animate-ship-right{
+            animation: animate-from-right-left 3s;
+        }
+        @keyframes animate-from-left-right {
+            0%{
+                transform: translateX(-600px);
+            }
+            50%{
+                transform: translateX(50px);
+            }
+            100%{
+                transform: translateX(0px);
+            }
+        }
+        @keyframes animate-from-right-left {
+            0%{
+                transform: translateX(600px);
+            }
+            50%{
+                transform: translateX(-50px);
+            }
+            100%{
+                transform: translateX(0px);
+            }
+        }
+    /* Ship container styling ends here */
+
+    /* JS selector classes starts from here */
+        .hide{
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 1s ease, visibility 1s ease;
+        }
+        .show{
+            opacity: 1!important;
+            visibility: visible!important;
+            transition: opacity 1s ease, visibility 1s ease !important;
+        }
+    /* JS selector classes ends here */
+
+/* Hero section styling ends here */
