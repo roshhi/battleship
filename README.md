@@ -2,4 +2,4 @@ In Progress
 
 Done with the Landing page.
 
-<img width="3840" height="2486" alt="Image" src="https://github.com/user-attachments/assets/b7f8b5f6-61b1-430d-9971-4ac00968deae" />
+<img width="1920" height="1243" alt="Screenshot 2025-10-07 at 6 05 14 AM" src="https://github.com/user-attachments/assets/fd7e6730-269b-4aa3-8a25-9da5a03207b6" />
