@@ -315,19 +315,32 @@ body{
 }
 
 .strategy-board-container{
+    display: flex;
+    justify-content: space-between;
     /* border: 2px solid blue; */
-    width: 50%;
+    width: 60%;
     height: 60%;
 }
 .playerBoard{
-    width: 70%;
+    width: 60%;
     height: 100%;
     display: grid;
     grid-template-columns: repeat(10,1fr);
     grid-template-rows: repeat(10,1fr);
-    gap: 3px;
     animation: menu-glow 3s ease-in-out infinite;
 }
 .cell{
     border: 1px solid rgb(255, 187, 0);
+}
+.ships-selection{
+    border: 2px solid greenyellow;
+    width: 30%;
+    height: 100%;
+}
+.ships-selection img{
+    /* border: 2px solid red; */
+}
+
+.highlight{
+    background-color: whitesmoke;
 }
