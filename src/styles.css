@@ -34,6 +34,7 @@ body{
 .container{
     width: 100%;
     height: 100%;
+    position: relative;
 }
 /* Hero section styling starts from here */
     .hero{
@@ -66,6 +67,7 @@ body{
             border-radius: 12px;
             box-shadow: 0 0 100px rgba(198,151,73,0.5);
             animation: menu-glow 3s ease-in-out infinite;
+            transition: opacity 1s ease, visibility 1s ease;
         }
         @keyframes menu-glow {
             0%   { box-shadow: 0 0 20px rgba(198,151,73,0.3); }
@@ -171,8 +173,8 @@ body{
         }
         .back-btn{
             position: absolute;
-            top: 20px;
-            left: 20px;
+            top: 40px;
+            left: 40px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -235,6 +237,7 @@ body{
             height: 60%;
             padding-left: 50px;
             padding-right: 70px;
+            transition: opacity 1s ease, visibility 1s ease;
         }
         .animate-ship-left{
             animation: animate-from-left-right 3s;
@@ -280,3 +283,51 @@ body{
     /* JS selector classes ends here */
 
 /* Hero section styling ends here */
+
+
+.mainContent{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border: 2px solid red;
+    width: 100vw;
+    height: 100vh;
+    transition: opacity 1s ease, visibility 1s ease;
+}
+.main-back-btn{
+    position: absolute;
+    top: 40px;
+    left: 40px;
+    /* visibility: hidden;
+    opacity: 0; */
+}
+.main-back-img{
+    width: 50px;
+    height: 50px;
+}
+.main-back-img:hover{
+    transform: scale(1.1);
+}
+
+.strategy-board-container{
+    /* border: 2px solid blue; */
+    width: 50%;
+    height: 60%;
+}
+.playerBoard{
+    width: 70%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(10,1fr);
+    grid-template-rows: repeat(10,1fr);
+    gap: 3px;
+    animation: menu-glow 3s ease-in-out infinite;
+}
+.cell{
+    border: 1px solid rgb(255, 187, 0);
+}
