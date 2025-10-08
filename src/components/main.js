@@ -30,21 +30,40 @@ export default function main() {
 
     const getAxisContainer = createDiv(getMainContainer,"axis-container");
     const getXAxisContainer = createDiv(getAxisContainer,"Xaxis-container");
+    createPara(getXAxisContainer,"x-button","X axis");
     const getYAxisContainer = createDiv(getAxisContainer,"Yaxis-container");
+    createPara(getYAxisContainer,"y-button","Y axis");
 
     const getBoardsContainer = createDiv(getMainContainer,"strategy-board-container"); 
     createDiv(getBoardsContainer,"playerBoard");
 
     const getShipSelectionBorad = createDiv(getBoardsContainer,"ships-selection");
-    const carrierShip = createImage(getShipSelectionBorad,carrierShipPic,"carrier-ship");
-    const battleShip = createImage(getShipSelectionBorad,battleShipPic,"battle-ship");
-    const cruiserShip = createImage(getShipSelectionBorad,cruiserShipPic,"cruiser-ship");
-    const submarineShip = createImage(getShipSelectionBorad,submarineShipPic,"submarine-ship");
-    const destroyerShip = createImage(getShipSelectionBorad,destroyerShipPic,"destroyer-ship");
+
+    const getShipContainer1 = createDiv(getShipSelectionBorad,"ship-container");
+    const carrierShip = createImage(getShipContainer1,carrierShipPic,"carrier-ship");
+    createPara(getShipContainer1,"ship-name","Carrier (5f)")
+
+    const getShipContainer2 = createDiv(getShipSelectionBorad,"ship-container");
+    const battleShip = createImage(getShipContainer2,battleShipPic,"battle-ship");
+    createPara(getShipContainer2,"ship-name","Battleship (4f)")
+
+    const getShipContainer3 = createDiv(getShipSelectionBorad,"ship-container");
+    const cruiserShip = createImage(getShipContainer3,cruiserShipPic,"cruiser-ship");
+    createPara(getShipContainer3,"ship-name","Cruiser (3f)")
+
+    const getShipContainer4 = createDiv(getShipSelectionBorad,"ship-container");
+    const submarineShip = createImage(getShipContainer4,submarineShipPic,"submarine-ship");
+    createPara(getShipContainer4,"ship-name","Submarine (3f)")
+
+    const getShipContainer5 = createDiv(getShipSelectionBorad,"ship-container");
+    const destroyerShip = createImage(getShipContainer5,destroyerShipPic,"destroyer-ship");
+    createPara(getShipContainer5,"ship-name","Destroyer (2f)")
 
     const getResetStartContainer = createDiv(getMainContainer,"reset-start-container");
-    const getStartContainer = createDiv(getAxisContainer,"start-container");
-    const getResetContainer = createDiv(getAxisContainer,"reset-container");
+    const getStartContainer = createDiv(getResetStartContainer,"start-container");
+    createPara(getStartContainer,"start-game-button","Start");
+    const getResetContainer = createDiv(getResetStartContainer,"reset-container");
+    createPara(getResetContainer,"reset-game-button","Reset");
 
     carrierShip.id = "carrier-ship-img";
     battleShip.id = "battle-ship-img";
