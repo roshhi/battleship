@@ -1,7 +1,12 @@
 import { createDiv, createPara, createSVG, createImage } from "../utils/utils.js";
 import back from "../assets/images/arrow.png";
-import destroyerShip from "../assets/images/ship1.png";
-import carrierShip from "../assets/images/ship2.png";
+import battleShipPic from "../assets/images/battleship.png";
+import carrierShipPic from "../assets/images/carrier.png";
+import cruiserShipPic from "../assets/images/cruiser.png";
+import submarineShipPic from "../assets/images/submarine.png";
+import destroyerShipPic from "../assets/images/destroyer.png";
+
+
 
 export default function main() {
     
@@ -21,14 +26,31 @@ export default function main() {
         getMainContent.classList.remove("show");
     });
 
-    const getBoardsContainer = createDiv(getMainContent,"strategy-board-container"); 
+    const getMainContainer = createDiv(getMainContent,"main-container"); 
+
+    const getAxisContainer = createDiv(getMainContainer,"axis-container");
+    const getXAxisContainer = createDiv(getAxisContainer,"Xaxis-container");
+    const getYAxisContainer = createDiv(getAxisContainer,"Yaxis-container");
+
+    const getBoardsContainer = createDiv(getMainContainer,"strategy-board-container"); 
     createDiv(getBoardsContainer,"playerBoard");
 
     const getShipSelectionBorad = createDiv(getBoardsContainer,"ships-selection");
-    const destShip = createImage(getShipSelectionBorad,destroyerShip,"destroyer-ship");
-    const destShip2 = createImage(getShipSelectionBorad,carrierShip,"carrier-ship");
-    destShip.id = "destroyer-ship-img";
-    destShip2.id = "carrier-ship-img";
+    const carrierShip = createImage(getShipSelectionBorad,carrierShipPic,"carrier-ship");
+    const battleShip = createImage(getShipSelectionBorad,battleShipPic,"battle-ship");
+    const cruiserShip = createImage(getShipSelectionBorad,cruiserShipPic,"cruiser-ship");
+    const submarineShip = createImage(getShipSelectionBorad,submarineShipPic,"submarine-ship");
+    const destroyerShip = createImage(getShipSelectionBorad,destroyerShipPic,"destroyer-ship");
+
+    const getResetStartContainer = createDiv(getMainContainer,"reset-start-container");
+    const getStartContainer = createDiv(getAxisContainer,"start-container");
+    const getResetContainer = createDiv(getAxisContainer,"reset-container");
+
+    carrierShip.id = "carrier-ship-img";
+    battleShip.id = "battle-ship-img";
+    cruiserShip.id = "cruiser-ship-img";
+    submarineShip.id = "submarine-ship-img";
+    destroyerShip.id = "destroyer-ship-img";
 
     const dragState = { id: null };
 
@@ -45,8 +67,6 @@ export default function main() {
     initialize_player_selection_board(dragState);
     initialize_Ships_Container();
 }
-
-
 
 function initialize_player_selection_board(dragState){
     const getPlayerBoard = document.querySelector(".playerBoard");
@@ -84,11 +104,12 @@ function highlightCells(cell,dragState){
         if (!draggedId) return;
         let shipLength;
 
-        if (draggedId === "destroyer-ship-img") shipLength = 5;
+        if (draggedId === "carrier-ship-img") shipLength = 5;
+        else if (draggedId === "battle-ship-img") shipLength = 4;
+        else if (draggedId === "cruiser-ship-img") shipLength = 3;
         else if (draggedId === "submarine-ship-img") shipLength = 3;
-        else if (draggedId === "battleship-ship-img") shipLength = 4;
-        else if (draggedId === "carrier-ship-img") shipLength = 3;
-    
+        else if (draggedId === "destroyer-ship-img") shipLength = 2;
+
     
         document.querySelectorAll(".cell.highlight").forEach (c => c.classList.remove("highlight"));
     
@@ -125,10 +146,12 @@ function placeImage(cell){
         const draggedElement = document.getElementById(draggedId);
         const cols = 10;
         let shipLength;
-        if (draggedId === "destroyer-ship-img") shipLength = 5;
+        if (draggedId === "carrier-ship-img") shipLength = 5;
+        else if (draggedId === "battle-ship-img") shipLength = 4;
+        else if (draggedId === "cruiser-ship-img") shipLength = 3;
         else if (draggedId === "submarine-ship-img") shipLength = 3;
-        else if (draggedId === "battleship-ship-img") shipLength = 4;
-        else if (draggedId === "carrier-ship-img") shipLength = 3;
+        else if (draggedId === "destroyer-ship-img") shipLength = 2;
+
         console.log(shipLength);
         // Collect target cells
         const targetCells = [];
@@ -174,7 +197,6 @@ function resizeImage(cell,draggedElement,shipLength){
     draggedElement.style.position = "absolute";
     draggedElement.style.left = `${x}px`;
     draggedElement.style.top = `${y}px`;
-
     draggedElement.style.width = `${shipLength * cellWidth}px`;
     draggedElement.style.height = `${cellHeight}px`;
 }
