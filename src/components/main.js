@@ -1,4 +1,6 @@
-import { createDiv, createPara, createSVG, createImage } from "../utils/utils.js";
+import { createDiv, createPara, createImage } from "../utils/domFunctions.js";
+import { getShipLength,getDraggedImage,resizeImage,createShipContainer } from "../utils/gameFunctions.js";
+
 import back from "../assets/images/arrow.png";
 import battleShipPic from "../assets/images/battleship.png";
 import carrierShipPic from "../assets/images/carrier.png";
@@ -7,87 +9,68 @@ import submarineShipPic from "../assets/images/submarine.png";
 import destroyerShipPic from "../assets/images/destroyer.png";
 
 
-
 export default function main() {
     
     const getContainer = document.querySelector(".container");
     const getMainContent = createDiv(getContainer,"mainContent");
+
+    // Getitng the start button and attaching the event listner to it.
     const getStartBtn = document.querySelector(".start-btn");
-    
-    const getBackBtn = createDiv(getMainContent,"main-back-btn");
-    const getMainBackBtn = createImage(getBackBtn,back,"main-back-img");
-    
     getStartBtn.addEventListener("click",()=>{
         getMainContent.classList.add("show");
     });
-    getMainBackBtn.addEventListener("click",()=>{
+
+    // Creating the back button and attaching the event listner to it.
+    const getBackBtnDiv = createDiv(getMainContent,"main-back-btn");
+    const getBackBtn = createImage(getBackBtnDiv,back,"main-back-img");
+    getBackBtn.addEventListener("click",()=>{
         document.querySelector(".menu").classList.remove("hide");
         document.querySelector(".ships-container").classList.remove("hide");
         getMainContent.classList.remove("show");
     });
 
+    // Creating one main container to hold axis selection,player board and start/reset button div.
     const getMainContainer = createDiv(getMainContent,"main-container"); 
 
+    // Creating axis selection container and buttons.
     const getAxisContainer = createDiv(getMainContainer,"axis-container");
     const getXAxisContainer = createDiv(getAxisContainer,"Xaxis-container");
     createPara(getXAxisContainer,"x-button","X axis");
     const getYAxisContainer = createDiv(getAxisContainer,"Yaxis-container");
     createPara(getYAxisContainer,"y-button","Y axis");
 
+    // Creating player board.
     const getBoardsContainer = createDiv(getMainContainer,"strategy-board-container"); 
     createDiv(getBoardsContainer,"playerBoard");
 
+    // Creating ship selection board.
     const getShipSelectionBorad = createDiv(getBoardsContainer,"ships-selection");
+    
+    // Creating ship containers.
+    createShipContainer(getShipSelectionBorad,carrierShipPic,"carrier-ship","Carrier (5f)", "carrier-ship-img");
+    createShipContainer(getShipSelectionBorad,battleShipPic,"battle-ship","Battleship (4f)", "battle-ship-img");
+    createShipContainer(getShipSelectionBorad,cruiserShipPic,"cruiser-ship","Cruiser (3f)","cruiser-ship-img");
+    createShipContainer(getShipSelectionBorad,submarineShipPic,"submarine-ship","Submarine (3f)","submarine-ship-img");
+    createShipContainer(getShipSelectionBorad,destroyerShipPic,"destroyer-ship","Destroyer (2f)", "destroyer-ship-img");
 
-    const getShipContainer1 = createDiv(getShipSelectionBorad,"ship-container");
-    const carrierShip = createImage(getShipContainer1,carrierShipPic,"carrier-ship");
-    createPara(getShipContainer1,"ship-name","Carrier (5f)")
-
-    const getShipContainer2 = createDiv(getShipSelectionBorad,"ship-container");
-    const battleShip = createImage(getShipContainer2,battleShipPic,"battle-ship");
-    createPara(getShipContainer2,"ship-name","Battleship (4f)")
-
-    const getShipContainer3 = createDiv(getShipSelectionBorad,"ship-container");
-    const cruiserShip = createImage(getShipContainer3,cruiserShipPic,"cruiser-ship");
-    createPara(getShipContainer3,"ship-name","Cruiser (3f)")
-
-    const getShipContainer4 = createDiv(getShipSelectionBorad,"ship-container");
-    const submarineShip = createImage(getShipContainer4,submarineShipPic,"submarine-ship");
-    createPara(getShipContainer4,"ship-name","Submarine (3f)")
-
-    const getShipContainer5 = createDiv(getShipSelectionBorad,"ship-container");
-    const destroyerShip = createImage(getShipContainer5,destroyerShipPic,"destroyer-ship");
-    createPara(getShipContainer5,"ship-name","Destroyer (2f)")
-
+    // Creating start / reset button.
     const getResetStartContainer = createDiv(getMainContainer,"reset-start-container");
     const getStartContainer = createDiv(getResetStartContainer,"start-container");
     createPara(getStartContainer,"start-game-button","Start");
     const getResetContainer = createDiv(getResetStartContainer,"reset-container");
     createPara(getResetContainer,"reset-game-button","Reset");
 
-    carrierShip.id = "carrier-ship-img";
-    battleShip.id = "battle-ship-img";
-    cruiserShip.id = "cruiser-ship-img";
-    submarineShip.id = "submarine-ship-img";
-    destroyerShip.id = "destroyer-ship-img";
-
-    const dragState = { id: null };
-
-    document.querySelectorAll(".ships-selection img").forEach(img => {
-        img.addEventListener("dragstart", (e) => {
-            dragState.id = e.target.id; // ✅ Store the dragged ID
-        });
-        
-        img.addEventListener("dragend", () => {
-            dragState.id = null; // cleanup
-        });
-    });
-
-    initialize_player_selection_board(dragState);
-    initialize_Ships_Container();
+    // Initializing Game functions
+    initialize_player_selection_board();
+    highlightCells();
+    placeImage();
 }
 
-function initialize_player_selection_board(dragState){
+// -------------------------------- Fucnctions definition starts from here ------------------------------------
+
+
+// Function to initialize player board
+function initialize_player_selection_board(){
     const getPlayerBoard = document.querySelector(".playerBoard");
     const rows = 10;
     const cols = 10;
@@ -100,122 +83,100 @@ function initialize_player_selection_board(dragState){
             cell.dataset.row = r;
             cell.dataset.col = c;
             cell.dataset.occupied = false;
-            highlightCells(cell,dragState);
             getPlayerBoard.appendChild(cell);
         }
     }
 }
 
-function initialize_Ships_Container(){
-    document.querySelectorAll(".ships-selection img").forEach(img => {
-        img.draggable = true;
-        img.addEventListener('dragstart', (e) => {
-            e.dataTransfer.setData("text/plain", e.target.id); // destShip.draggable = false;
+// Function to highlight the board cells being hovered over.
+function highlightCells(){
+
+    // Getting all the cells.
+    const getAllCells = document.querySelectorAll(".playerBoard div");
+
+    // Getting the state of the image which is being dragged.
+    const dragState = getDraggedImage();
+
+    getAllCells.forEach(cell => {
+        cell.addEventListener("dragover", (e) => {
+            e.preventDefault();
+    
+            const draggedId = dragState.id;
+            if (!draggedId) return;
+        
+            let shipLength = getShipLength(draggedId);
+            document.querySelectorAll(".cell.highlight").forEach (c => c.classList.remove("highlight"));
+        
+            const startRow = parseInt(cell.dataset.row);
+            const startCol = parseInt(cell.dataset.col);
+                    
+            for (let i = 0; i < shipLength; i++) {
+                if(startCol<0 || startCol>9){
+                    break;
+                }
+                const targetCol = startCol + i; // using cols here because we are placing horizontally. Row will remain same but col will change.
+                const targetCell = document.querySelector(
+                `.cell[data-row='${startRow}'][data-col='${targetCol}']`); // looking for the cell div whose row is the one we choose above (startRow) and col will get incremented by target col.
+                if (targetCell) targetCell.classList.add("highlight");
+            }
+        });
+
+        cell.addEventListener("dragleave", () => {
+            cell.classList.remove("highlight");
         });
     });
 }
 
-function highlightCells(cell,dragState){
-    cell.addEventListener("dragover", (e) => {
-        e.preventDefault();
+// Function to place the image over the cells.
+function placeImage(){
 
-        const draggedId = dragState.id;
-        if (!draggedId) return;
-        let shipLength;
+    const getAllCells = document.querySelectorAll(".playerBoard div");
+    const dragState = getDraggedImage();
 
-        if (draggedId === "carrier-ship-img") shipLength = 5;
-        else if (draggedId === "battle-ship-img") shipLength = 4;
-        else if (draggedId === "cruiser-ship-img") shipLength = 3;
-        else if (draggedId === "submarine-ship-img") shipLength = 3;
-        else if (draggedId === "destroyer-ship-img") shipLength = 2;
-
-    
-        document.querySelectorAll(".cell.highlight").forEach (c => c.classList.remove("highlight"));
-    
+    getAllCells.forEach(cell => {
         const startRow = parseInt(cell.dataset.row);
         const startCol = parseInt(cell.dataset.col);
-                
-        for (let i = 0; i < shipLength; i++) {
-            if(startCol<0 || startCol>9){
-                break;
+
+        cell.addEventListener("drop", (e) => {
+            e.preventDefault();
+    
+            const draggedId = dragState.id;
+            const draggedElement = document.getElementById(draggedId);
+            const cols = 10;
+            let shipLength = getShipLength(draggedId);
+    
+            // Collect target cells
+            const targetCells = [];
+            for (let i = 0; i < shipLength; i++) {
+              const targetCol = startCol + i;
+              if (targetCol >= cols) break;
+              const targetCell = document.querySelector(
+                `.cell[data-row='${startRow}'][data-col='${targetCol}']`
+              );
+              if (targetCell) targetCells.push(targetCell);
             }
-            const targetCol = startCol + i; // using cols here because we are placing horizontally. Row will remain same but col will change.
-            const targetCell = document.querySelector(
-            `.cell[data-row='${startRow}'][data-col='${targetCol}']`); // looking for the cell div whose row is the one we choose above (startRow) and col will get incremented by target col.
-            if (targetCell) targetCell.classList.add("highlight");
-        }
-    });
-    
-    cell.addEventListener("dragleave", () => {
-        cell.classList.remove("highlight");
-    });
-
-    placeImage(cell);
-}
-
-function placeImage(cell){
-
-    const startRow = parseInt(cell.dataset.row);
-    const startCol = parseInt(cell.dataset.col);
-
-    cell.addEventListener("drop", (e) => {
-        e.preventDefault();
-
-        const draggedId = e.dataTransfer.getData("text/plain"); // stores the image id
-        const draggedElement = document.getElementById(draggedId);
-        const cols = 10;
-        let shipLength;
-        if (draggedId === "carrier-ship-img") shipLength = 5;
-        else if (draggedId === "battle-ship-img") shipLength = 4;
-        else if (draggedId === "cruiser-ship-img") shipLength = 3;
-        else if (draggedId === "submarine-ship-img") shipLength = 3;
-        else if (draggedId === "destroyer-ship-img") shipLength = 2;
-
-        console.log(shipLength);
-        // Collect target cells
-        const targetCells = [];
-        for (let i = 0; i < shipLength; i++) {
-          const targetCol = startCol + i;
-          if (targetCol >= cols) break;
-          const targetCell = document.querySelector(
-            `.cell[data-row='${startRow}'][data-col='${targetCol}']`
-          );
-          if (targetCell) targetCells.push(targetCell);
-        }
-    
-        // Check validity: all must be free
-        const valid = targetCells.length === shipLength &&
-                      targetCells.every(c => c.dataset.occupied === "false");
-    
-        if (!valid) {
-          alert("Invalid placement!");
-          document.querySelectorAll(".cell.highlight").forEach(c => c.classList.remove("highlight"));
-          return;
-        }
-    
-        // Mark as occupied
-        targetCells.forEach(c => {
-          c.dataset.occupied = "true";
-          c.classList.remove("highlight");
-        });
-
-        resizeImage(cell,draggedElement,shipLength);
         
-        window.addEventListener('resize', function() {
+            // Check validity: all must be free
+            const valid = targetCells.length === shipLength &&
+                          targetCells.every(c => c.dataset.occupied === "false");
+        
+            if (!valid) {
+              alert("Invalid placement!");
+              document.querySelectorAll(".cell.highlight").forEach(c => c.classList.remove("highlight"));
+              return;
+            }
+        
+            // Mark as occupied
+            targetCells.forEach(c => {
+              c.dataset.occupied = "true";
+              c.classList.remove("highlight");
+            });
+    
             resizeImage(cell,draggedElement,shipLength);
+            
+            window.addEventListener('resize', function() {
+                resizeImage(cell,draggedElement,shipLength);
+            });
         });
-    });
-}
-
-function resizeImage(cell,draggedElement,shipLength){
-    const x = cell.offsetLeft;
-    const y = cell.offsetTop;
-    const cellWidth = cell.offsetWidth;
-    const cellHeight = cell.offsetHeight;
-
-    draggedElement.style.position = "absolute";
-    draggedElement.style.left = `${x}px`;
-    draggedElement.style.top = `${y}px`;
-    draggedElement.style.width = `${shipLength * cellWidth}px`;
-    draggedElement.style.height = `${cellHeight}px`;
+    });  
 }
