@@ -1,4 +1,4 @@
-import { createDiv, createPara, createSVG, createTextField,  createImage } from "../utils/utils.js";
+import { createDiv, createPara,createImage } from "../utils/domFunctions.js";
 
 import ship1 from "../assets/images/ship1-landing-page.png";
 import ship2 from "../assets/images/ship2-landing-page.png";
@@ -26,10 +26,10 @@ export default function hero() {
     // Creating Instruction div
     const getInstructionDiv = createDiv(getMenu,"instruction-main");
     createPara(getInstructionDiv,"instruction-text-heading","⚓ Battleship Instructions!");
-    createPara(getInstructionDiv,"instruction-text","▸ Sink all enemy ships before they sink yours!");
     createPara(getInstructionDiv,"instruction-text","▸ Each player has a grid. Ships are hidden on it.");
+    createPara(getInstructionDiv,"instruction-text","▸ Arrange all your ships by dragging them on your grid.");
     createPara(getInstructionDiv,"instruction-text","▸ Choose a cell on the enemy grid to attack.");
-    createPara(getInstructionDiv,"instruction-text","▸ Sink all enemy ships by finding all their positions.");
+    createPara(getInstructionDiv,"instruction-text","▸ Sink all enemy ships before they sink yours by finding all their positions.");
     createPara(getInstructionDiv,"instruction-text-heading","⚓ Tip");
     createPara(getInstructionDiv,"instruction-text","▸ When you hit part of a ship, try attacking the nearby cells (up, down, left, right) to find the rest of it.")
 
