@@ -142,6 +142,8 @@ function placeImage(){
     
             const draggedId = dragState.id;
             const draggedElement = document.getElementById(draggedId);
+            draggedElement.draggable = false; // Don't allow image to drag agian after placed
+
             const cols = 10;
             let shipLength = getShipLength(draggedId);
     
