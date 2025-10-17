@@ -20,18 +20,12 @@ export function getShipLength(draggedId){
     return shipLength;
 }
 
-// Function to resize the ship image which is being dragged if screen resolution changes.
-export function resizeImage(cell,draggedElement,shipLength){
-    const x = cell.offsetLeft;
-    const y = cell.offsetTop;
-    const cellWidth = cell.offsetWidth;
-    const cellHeight = cell.offsetHeight;
+// Function to color the grid cells over which image is placed
+export function colorGridCells(targetCells){
 
-    draggedElement.style.position = "absolute";
-    draggedElement.style.left = `${x}px`;
-    draggedElement.style.top = `${y}px`;
-    draggedElement.style.width = `${shipLength * cellWidth}px`;
-    draggedElement.style.height = `${cellHeight}px`;
+    targetCells.forEach(element => {
+        element.style.backgroundColor = "white";
+    });
 }
 
 // Function to get the state of the image which is being dragged.
@@ -40,12 +34,32 @@ export function getDraggedImage(){
     const dragState = { id: null };
     document.querySelectorAll(".ships-selection img").forEach(img => {
         img.draggable = true;
+        // img.style.border = '2px solid red'
         img.addEventListener("dragstart", (e) => {
             dragState.id = e.target.id;
         });
         img.addEventListener("dragend", () => {
+            img.classList.add('hide')
             dragState.id = null;
         });
     });
     return dragState;
+}
+
+export function resetContainer(){
+    const getAllCells = document.querySelectorAll(".playerBoard div");
+    const xAxisContainer = document.querySelector(".Xaxis-container");
+    const yAxisContainer = document.querySelector(".Yaxis-container");
+
+    xAxisContainer.classList.add('selected');
+    yAxisContainer.classList.remove('selected');
+
+    getAllCells.forEach(cell => {
+        cell.style.backgroundColor = '';
+        cell.dataset.occupied = "false";
+    });
+    document.querySelectorAll(".ships-selection img").forEach(img => {
+        img.draggable = true;
+        img.classList.remove('hide')
+    });
 }
