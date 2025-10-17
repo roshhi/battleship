@@ -183,7 +183,6 @@ function placeImage(){
             // Getting the ship image which is being dragged via its id
             const draggedId = dragState.id;
             const draggedElement = document.getElementById(draggedId);
-            // draggedElement.draggable = false; // Don't allow image to drag agian after placed
 
             const cols = 10;
             const rows = 10;
