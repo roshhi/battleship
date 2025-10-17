@@ -1,5 +1,5 @@
 import { createDiv, createPara, createImage } from "../utils/domFunctions.js";
-import { getShipLength,getDraggedImage,resizeImage,createShipContainer } from "../utils/gameFunctions.js";
+import { getShipLength,getDraggedImage,colorGridCells,createShipContainer,resetContainer } from "../utils/gameFunctions.js";
 
 import back from "../assets/images/arrow.png";
 import battleShipPic from "../assets/images/battleship.png";
@@ -60,6 +60,13 @@ export default function main() {
     const getResetContainer = createDiv(getResetStartContainer,"reset-container");
     createPara(getResetContainer,"reset-game-button","Reset");
 
+    getResetContainer.addEventListener("click",()=>{
+        resetContainer();
+    })
+    getBackBtnDiv.addEventListener("click",()=>{
+        resetContainer();
+    })
+
     // Initializing Game functions
     initialize_player_selection_board();
     highlightCells();
@@ -69,7 +76,7 @@ export default function main() {
 // -------------------------------- Fucnctions definition starts from here ------------------------------------
 
 
-// Function to initialize player board
+// Function to initialize player board.
 function initialize_player_selection_board(){
     const getPlayerBoard = document.querySelector(".playerBoard");
     const rows = 10;
@@ -91,6 +98,22 @@ function initialize_player_selection_board(){
 // Function to highlight the board cells being hovered over.
 function highlightCells(){
 
+    let axis = "x"; //default axis is x
+    const xAxisContainer = document.querySelector(".Xaxis-container");
+    xAxisContainer.classList.add('selected')
+
+    const yAxisContainer = document.querySelector(".Yaxis-container");
+    xAxisContainer.addEventListener("click",()=>{
+        axis = "x";
+        yAxisContainer.classList.remove('selected')
+        xAxisContainer.classList.add('selected')
+    })
+    yAxisContainer.addEventListener("click",()=>{
+        axis = "y";     
+        yAxisContainer.classList.add('selected');
+        xAxisContainer.classList.remove('selected')
+    })
+
     // Getting all the cells.
     const getAllCells = document.querySelectorAll(".playerBoard div");
 
@@ -111,12 +134,20 @@ function highlightCells(){
             const startCol = parseInt(cell.dataset.col);
                     
             for (let i = 0; i < shipLength; i++) {
-                if(startCol<0 || startCol>9){
+                if(startCol<0 || startCol>9 || startRow<0 || startRow>9){
                     break;
                 }
-                const targetCol = startCol + i; // using cols here because we are placing horizontally. Row will remain same but col will change.
-                const targetCell = document.querySelector(
-                `.cell[data-row='${startRow}'][data-col='${targetCol}']`); // looking for the cell div whose row is the one we choose above (startRow) and col will get incremented by target col.
+                let targetCell;
+                if(axis=='x'){
+                    const targetCol = startCol + i; // using cols here because we are placing horizontally. Row will remain same but col will change.
+                    targetCell = document.querySelector(
+                    `.cell[data-row='${startRow}'][data-col='${targetCol}']`); // looking for the cell div whose row is the one we choose above (startRow) and col will get incremented by target col.
+                }
+                else{
+                    const targetRow = startRow + i; // using rows here because we are placing vertically. Col will remain same but row will change.
+                    targetCell = document.querySelector(
+                    `.cell[data-row='${targetRow}'][data-col='${startCol}']`); // looking for the cell div whose row is the one we choose above (startRow) and col will get incremented by target col.
+                }
                 if (targetCell) targetCell.classList.add("highlight");
             }
         });
@@ -130,6 +161,15 @@ function highlightCells(){
 // Function to place the image over the cells.
 function placeImage(){
 
+    let axis = "x";
+
+    document.querySelector(".Xaxis-container").addEventListener("click",()=>{
+        axis = "x";
+    })
+    document.querySelector(".Yaxis-container").addEventListener("click",()=>{
+        axis = "y";
+    })
+
     const getAllCells = document.querySelectorAll(".playerBoard div");
     const dragState = getDraggedImage();
 
@@ -139,25 +179,44 @@ function placeImage(){
 
         cell.addEventListener("drop", (e) => {
             e.preventDefault();
-    
+
+            // Getting the ship image which is being dragged via its id
             const draggedId = dragState.id;
             const draggedElement = document.getElementById(draggedId);
-            draggedElement.draggable = false; // Don't allow image to drag agian after placed
+            // draggedElement.draggable = false; // Don't allow image to drag agian after placed
 
             const cols = 10;
-            let shipLength = getShipLength(draggedId);
+            const rows = 10;
+
+            let shipLength = getShipLength(draggedId); // Getting the length of ship image which is being dragged.
+
     
             // Collect target cells
             const targetCells = [];
-            for (let i = 0; i < shipLength; i++) {
-              const targetCol = startCol + i;
-              if (targetCol >= cols) break;
-              const targetCell = document.querySelector(
-                `.cell[data-row='${startRow}'][data-col='${targetCol}']`
-              );
-              if (targetCell) targetCells.push(targetCell);
+
+            if(axis=="x"){
+                for (let i = 0; i < shipLength; i++) {
+                    const targetCol = startCol + i;
+                    if (targetCol >= cols) break;
+                    const targetCell = document.querySelector(
+                        `.cell[data-row='${startRow}'][data-col='${targetCol}']`
+                    );
+                    if (targetCell) targetCells.push(targetCell);
+                }
             }
-        
+            else{
+                for (let i = 0; i < shipLength; i++) {
+
+                    const targetRow = startRow + i; 
+                    if (targetRow >= rows) break;
+
+                    const targetCell = document.querySelector(
+                        `.cell[data-row='${targetRow}'][data-col='${startCol}']`
+                    );
+                    if (targetCell) targetCells.push(targetCell);
+                }
+            }
+            
             // Check validity: all must be free
             const valid = targetCells.length === shipLength &&
                           targetCells.every(c => c.dataset.occupied === "false");
@@ -173,12 +232,8 @@ function placeImage(){
               c.dataset.occupied = "true";
               c.classList.remove("highlight");
             });
-    
-            resizeImage(cell,draggedElement,shipLength);
-            
-            window.addEventListener('resize', function() {
-                resizeImage(cell,draggedElement,shipLength);
-            });
+            draggedElement.draggable = false;
+            colorGridCells(targetCells);
         });
     });  
 }
