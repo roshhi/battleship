@@ -53,14 +53,14 @@ body{
     /* Menu section styling starts from here */
         .menu{
             position: absolute;
-            top: 30%;
+            top: 28%;
             left: 50%;
             transform: translate(-50%, -50%);
             display: flex;
             flex-direction: column;
             align-items: center;
-            width: 28%;
-            height: 50%;
+            width: 85%;
+            height: 45%;
             background: linear-gradient(180deg, #0b1c2c, #000000);
             border-radius: 25px;
             border: 2px solid #ffc400;
@@ -75,11 +75,11 @@ body{
             100% { box-shadow: 0 0 20px rgba(255, 255, 255, 0.1); }
         }
         .game-title{
-            font-size: clamp(3rem,5vw,6rem);
+            font-size: clamp(3.5rem,4vw,5rem);
             font-family: 'Pirata One', cursive;
             letter-spacing: 5px;
             color: whitesmoke;
-            height: 35%;
+            height: 25%;
             transition: opacity 1s ease, visibility 1s ease;
         }
         .menu-buttons{
@@ -89,6 +89,7 @@ body{
             flex-direction: column;
             justify-content: space-between;
             transition: opacity 1s ease, visibility 1s ease;
+            margin-top: 10px;
         }
         .menu-buttons div{
             height: 28%;
@@ -110,7 +111,7 @@ body{
         }
         .menu-btn-txt {
             font-family: 'Pirata One', 'Cinzel Decorative', serif;
-            font-size: clamp(1.5rem, 2vw, 2.5rem);
+            font-size: clamp(1.5rem, 2vw, 2.2rem);
             font-weight: 700;
             color: #f5f5f5;
             letter-spacing: 2px;
@@ -232,12 +233,16 @@ body{
     /* Ship container styling starts from here */
         .ships-container{
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center!important;
+            gap: 20px;
             width: 100%;
-            height: 60%;
-            padding-left: 50px;
-            padding-right: 70px;
+            height: 350px;
             transition: opacity 1s ease, visibility 1s ease;
+        }
+        .ships-container img{
+            height: 48%;
         }
         .animate-ship-left{
             animation: animate-from-left-right 3s;
@@ -267,6 +272,83 @@ body{
                 transform: translateX(0px);
             }
         }
+
+        @media (min-width: 450px) {
+            .ships-container{
+                flex-direction: row;
+                justify-content: center;
+            }
+            .ships-container img{
+                height: 58%;
+            }
+        }
+        @media (min-width: 470px) {
+            .menu{
+                width: 300px;
+                height: 400px;
+            }
+            .game-title{
+                margin-top: 20px;
+
+            }
+            .ships-container img{
+                height: clamp(100px,40vw,300px);
+            }
+        }  
+        @media (min-width: 768px) {
+            .ships-container{
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                height: 50%;
+                padding-left: 0px !important;
+                padding-right: 0px !important;
+            }
+            .ships-container img{
+                height: clamp(100px,50vw,350px);
+            }
+        } 
+        @media (min-width: 1024px) {
+            .menu{
+                top: 28%;
+                width: 360px;
+                height: 410px;
+            }
+            .ship-one {
+                padding-left: 50px;
+            }
+            .ship-two {
+                padding-right: 70px;
+            }
+            .ships-container img{
+                height: clamp(100px,50vw,430px);
+            }
+        }
+        @media (min-width: 1200px) {
+            .ships-container{
+                height: 60%;
+            }
+            .ships-container img{
+                height: clamp(100px,50vw,500px);
+            }
+        }
+        @media (min-width: 1500px) {
+            .ships-container{
+                height: 67%;
+            }
+            .ships-container img{
+                height: clamp(100px,50vw,600px);
+            }
+        }  
+        @media (min-width: 1650px) {
+            .ships-container{
+                height: 77%;
+            }
+            .ships-container img{
+                height: clamp(100px,50vw,655px);
+            }
+        }                      
+    
     /* Ship container styling ends here */
 
     /* JS selector classes starts from here */
