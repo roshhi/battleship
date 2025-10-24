@@ -1,4 +1,5 @@
 import { createDiv, createPara,createImage } from "../utils/domFunctions.js";
+import { addSounds } from "../utils/gameFunctions.js";
 
 import ship1 from "../assets/images/ship1-landing-page.png";
 import ship2 from "../assets/images/ship2-landing-page.png";
@@ -33,7 +34,7 @@ export default function hero() {
     createPara(getInstructionDiv,"instruction-text-heading","⚓ Tip");
     createPara(getInstructionDiv,"instruction-text","▸ When you hit part of a ship, try attacking the nearby cells (up, down, left, right) to find the rest of it.")
 
-    const getInstBackBtn = createDiv(getInstructionDiv,"instruction-back-btn");
+    const getInstBackBtn = createDiv(getMenu,"instruction-back-btn");
     createPara(getInstBackBtn,"inst-back-btn-txt","Go back");
 
     
@@ -57,7 +58,9 @@ export default function hero() {
     const getShipOne = createImage(getShipsContainer,ship1,"ship-one");
     const getShipTwo = createImage(getShipsContainer,ship2,"ship-two");
 
-
+    // Calling add sounds function
+    addSounds();
+    
     // ----------------------------- Adding Event Listners ----------------------------- 
 
     // Adding event listner to start button
@@ -69,6 +72,7 @@ export default function hero() {
     // Adding event listner to instruction button
     getInstBtn.addEventListener("click",()=>{
         getInstructionDiv.classList.add("show");
+        getInstBackBtn.classList.add("show");
         getTitle.classList.add("hide");
         getMenuButtons.classList.add("hide");
     })
@@ -79,6 +83,8 @@ export default function hero() {
         getBackBtn.classList.remove("show");
         getSoundDiv.classList.remove("show");
         getInstructionDiv.classList.remove("show");
+        getInstBackBtn.classList.remove("show");
+
     })
 
     // Adding event listner to back button

@@ -1,5 +1,6 @@
 import { createDiv, createPara, createImage } from "../utils/domFunctions.js";
 import { getShipLength,getDraggedImage,colorGridCells,createShipContainer,resetContainer } from "../utils/gameFunctions.js";
+import { addSounds } from "../utils/gameFunctions.js";
 
 import back from "../assets/images/arrow.png";
 import battleShipPic from "../assets/images/battleship.png";
@@ -66,6 +67,9 @@ export default function main() {
     getBackBtnDiv.addEventListener("click",()=>{
         resetContainer();
     })
+
+    // Calling add sounds function
+    addSounds();
 
     // Initializing Game functions
     initialize_player_selection_board();
