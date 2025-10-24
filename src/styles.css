@@ -125,28 +125,29 @@ body{
             transform: translate(-50%,-50%);
             width: 100%;
             height: 100%;
-            border: 1px solid rgb(223, 223, 223);
             visibility: hidden;
             opacity: 0;
             border-radius: 15px;
             padding: 10px;
             color: whitesmoke;
             padding-left: 20px;
+            overflow: hidden;
+            overflow-y: auto;
         }
         .instruction-text-heading{
             font-family: 'Orbitron', cursive;
-            font-size: clamp(1rem, 1.5vw, 2rem);
+            font-size: clamp(2rem, 1.5vw, 2rem);
             padding-top: 15px ;
-            color: rgb(255, 187, 0);;
+            color: rgb(255, 187, 0);
         }
         .instruction-text{
             font-family: 'nunito', cursive;
-            font-size: 1vw;
+            font-size: 18px;
             padding-top: 10px;
         }
         .instruction-back-btn{
             position: absolute;
-            top: 75%;
+            top: 100%;
             left: 50%;
             width: 100px;
             transform: translate(-50%,-50%);
@@ -158,14 +159,16 @@ body{
             font-family: 'Pirata One', 'Cinzel Decorative', serif;
             font-size: clamp(1rem, 1.5vw, 2rem);
             margin-top: 5vh;
+            z-index: 1;
+            background-color:rgb(255, 187, 0);
+            margin-bottom: 10px;
+            color: white;
+            visibility: hidden;
+            opacity: 0;
         }
         .instruction-back-btn:hover {
             transform: translate(-50%, -50%) scale(1.1) rotate(-2deg);
             transition: transform 0.25s ease, text-shadow 0.25s ease;
-            text-shadow:
-              3px 3px 0 #000,
-              6px 6px 12px rgba(0, 0, 0, 0.6),
-              0 0 25px rgba(255, 191, 0, 0.8);
             cursor: pointer;
             box-shadow: 0 0 20px rgba(198,151,73,0.7);
         }
@@ -202,7 +205,7 @@ body{
             transform: translate(-50%,-50%);
             width: 50%;
             height: 70px;
-            font-size: 3vw;
+            font-size: clamp(1.5rem, 2vw, 2.2rem);
             font-family: 'Pirata One', cursive;
             color: whitesmoke;
             gap: 10px;
@@ -214,7 +217,7 @@ body{
         }
         .toggle{
             width: 100%;
-            height: 100%;
+            height: 80%;
             border-radius: 15px;
             padding: 2px;
             border: 2px solid rgb(255, 187, 0);
