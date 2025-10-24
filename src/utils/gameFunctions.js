@@ -63,3 +63,41 @@ export function resetContainer(){
         img.classList.remove('hide')
     });
 }
+
+export function addSounds(){
+    const music = document.getElementById('bgMusic');
+    const click = document.getElementById('btnClick');
+    const getToggle = document.querySelector(".toggle");
+    const classNames = [
+        'main-back-img',
+        'back-img',
+        'instruction-back-btn',
+        'Xaxis-container',
+        'Yaxis-container',
+        'reset-container',
+        'start-container',
+        'start-btn',
+        'instruction-btn',
+        'setting-btn',
+        'toggle'
+    ];
+    classNames.forEach(className => {
+        const buttons = document.querySelectorAll(`.${className}`);
+        buttons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                click.play();
+            });
+        });
+    });
+    let counter = 0;
+    getToggle.addEventListener("click",()=>{
+        if(counter%2==0){
+            music.play();
+        }
+        else{
+            music.pause();
+            music.currentTime = 0;
+        }
+        counter++;
+    })
+}
