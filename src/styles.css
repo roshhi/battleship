@@ -160,7 +160,6 @@ body{
             font-size: clamp(1rem, 1.5vw, 2rem);
             margin-top: 5vh;
             z-index: 1;
-            background-color:rgb(255, 187, 0);
             margin-bottom: 10px;
             color: white;
             visibility: hidden;
@@ -369,6 +368,12 @@ body{
             visibility: visible!important;
             transition: opacity 1s ease, visibility 1s ease !important;
         }
+        .removeDom{
+            display: none!important;
+        }
+        .addDom{
+            display: grid!important;
+        }
     /* JS selector classes ends here */
 
 /* Hero section styling ends here */
@@ -391,8 +396,6 @@ body{
     position: absolute;
     top: 40px;
     left: 40px;
-    /* visibility: hidden;
-    opacity: 0; */
 }
 .main-back-img{
     width: 50px;
@@ -429,6 +432,7 @@ body{
     justify-content: space-between;
     width: 100%;
     height: 65%;
+    position: relative;
 }
 .playerBoard{
     width: 60%;
@@ -437,9 +441,25 @@ body{
     grid-template-columns: repeat(10,1fr);
     grid-template-rows: repeat(10,1fr);
     box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+    position: relative;
+    margin-right: 25px;
 }
+.enemyBoard{
+    width: 60%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(10,1fr);
+    grid-template-rows: repeat(10,1fr);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+    display: none;
+    margin-left: 25px;
+}
+
 .cell{
     border: 1px solid rgb(255, 187, 0);
+}
+.cellBg{
+    background-color: white;
 }
 .ships-selection{
     display: flex;
@@ -539,9 +559,10 @@ img.boat {
         height: 80%;
         align-items: center;
     }
-    .playerBoard{
+    .playerBoard,.enemyBoard{
         width: 100%;
         min-height: 400px;
+        margin: 0;
     }    
     .strategy-board-container{
         flex-direction: column;
