@@ -8,7 +8,8 @@ import carrierShipPic from "../assets/images/carrier.png";
 import cruiserShipPic from "../assets/images/cruiser.png";
 import submarineShipPic from "../assets/images/submarine.png";
 import destroyerShipPic from "../assets/images/destroyer.png";
-
+import crossPic from "../assets/images/cross.png"
+import missPic from "../assets/images/miss.png"
 
 export default function main() {
     
@@ -42,7 +43,9 @@ export default function main() {
 
     // Creating player board.
     const getBoardsContainer = createDiv(getMainContainer,"strategy-board-container"); 
-    createDiv(getBoardsContainer,"playerBoard");
+    const getPlayerBoard = createDiv(getBoardsContainer,"playerBoard");
+    createDiv(getBoardsContainer,"enemyBoard");
+
 
     // Creating ship selection board.
     const getShipSelectionBorad = createDiv(getBoardsContainer,"ships-selection");
@@ -56,8 +59,13 @@ export default function main() {
 
     // Creating start / reset button.
     const getResetStartContainer = createDiv(getMainContainer,"reset-start-container");
+
     const getStartContainer = createDiv(getResetStartContainer,"start-container");
     createPara(getStartContainer,"start-game-button","Start");
+
+    getStartContainer.addEventListener('click',()=>{
+        startGame();
+    })
     const getResetContainer = createDiv(getResetStartContainer,"reset-container");
     createPara(getResetContainer,"reset-game-button","Reset");
 
@@ -73,6 +81,7 @@ export default function main() {
 
     // Initializing Game functions
     initialize_player_selection_board();
+    initialize_enemy_selection_board();
     highlightCells();
     placeImage();
 }
@@ -95,6 +104,100 @@ function initialize_player_selection_board(){
             cell.dataset.col = c;
             cell.dataset.occupied = false;
             getPlayerBoard.appendChild(cell);
+        }
+    }
+}
+
+// Function to initialize enemy board.
+function initialize_enemy_selection_board(){
+    const getEnemyBoard = document.querySelector(".enemyBoard");
+    const rows = 10;
+    const cols = 10;
+
+    // Generating random row numbers for ships
+    const randomCarrierRow = Math.floor(Math.random() * 2);
+    const randomBattleShipRow = Math.floor(Math.random() * (3 - 2 + 1)) + 2;
+    let cruiserRow = 4;
+    let submarineRow = 7;
+    const randomDestroyerShipRow = Math.floor(Math.random() * (4 - 2 + 1)) + 7;
+
+    // Generating random position index for ships
+    let randomCarrierPos = Math.floor(Math.random() * 6);
+    let randomBattleshipPos = Math.floor(Math.random() * 7);
+    let randomCruiserPos = Math.floor(Math.random() * 5);
+    let randomSubmarinePos = Math.floor(Math.random()* (6 - 2 + 1)) + 5;
+    let randomDestroyerPos = Math.floor(Math.random() * 4);
+
+    // Maintaining count for ships
+    let carrierCount=0;
+    let battleCount=0;
+    let cruiserCount=0;
+    let submarineCount=0;
+    let destroyerCount=0;
+
+    for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+
+            const cell = document.createElement("div");
+            cell.classList.add("cell");
+
+            cell.addEventListener("mouseenter", () => {
+                cell.classList.add("cellBg");  
+            });
+            cell.addEventListener("mouseleave", () => {
+                cell.classList.remove("cellBg");
+            });
+
+            cell.dataset.row = r;
+            cell.dataset.col = c;
+
+            if(r == randomCarrierRow && c == randomCarrierPos && carrierCount!=5){
+                cell.dataset.occupied = true;
+                carrierCount++;
+                randomCarrierPos++;
+            }
+            else if(r == randomBattleShipRow && c == randomBattleshipPos && battleCount!=4){
+                cell.dataset.occupied = true;
+                battleCount++;
+                randomBattleshipPos++;
+            }
+            else if(r == cruiserRow && c == randomCruiserPos && cruiserCount!=3){
+                cell.dataset.occupied = true;
+                cruiserRow++;
+                cruiserCount++;
+            }
+            else if(r == submarineRow && c == randomSubmarinePos && submarineCount!=3){
+                cell.dataset.occupied = true;
+                submarineRow++;
+                submarineCount++;
+            }
+            else if(r == randomDestroyerShipRow && c == randomDestroyerPos && destroyerCount!=2){
+                cell.dataset.occupied = true;
+                randomDestroyerPos++;
+                destroyerCount++;
+            }
+            else{
+                cell.dataset.occupied = false;
+            }
+            cell.addEventListener('click',()=>{
+                if(cell.dataset.occupied == 'true'){
+                    cell.style.backgroundImage = `url('${crossPic}')`;
+                    cell.style.backgroundSize = "70%"; 
+                    cell.style.padding = "10px";
+                    cell.style.backgroundPosition = "center";
+                    cell.style.backgroundRepeat = "no-repeat"; 
+                    cell.style.pointerEvents = "none";  
+                }
+                else if(cell.dataset.occupied == 'false'){
+                    cell.style.backgroundImage = `url('${missPic}')`;
+                    cell.style.backgroundSize = "70%"; 
+                    cell.style.backgroundRepeat = "no-repeat";   
+                    cell.style.backgroundPosition = "center";
+                    cell.style.filter = "brightness(0) invert(1)";
+                    cell.style.pointerEvents = "none";
+                }
+            })
+            getEnemyBoard.appendChild(cell);
         }
     }
 }
@@ -229,6 +332,10 @@ function placeImage(){
               document.querySelectorAll(".cell.highlight").forEach(c => c.classList.remove("highlight"));
               return;
             }
+            else{
+                draggedElement.classList.add('hide');
+                dragState.id = null;
+            }
         
             // Mark as occupied
             targetCells.forEach(c => {
@@ -239,4 +346,18 @@ function placeImage(){
             colorGridCells(targetCells);
         });
     });  
+}
+
+
+function startGame(){
+
+    const getAxisContainer = document.querySelector(".axis-container");
+    const getResetStartContainer = document.querySelector(".reset-start-container");
+    const getShipSelectionBorad = document.querySelector(".ships-selection");
+    const getEnemyBoard = document.querySelector(".enemyBoard");
+
+    getAxisContainer.classList.add("hide");
+    getResetStartContainer.classList.add("hide");
+    getShipSelectionBorad.classList.add("removeDom");
+    getEnemyBoard.classList.add("addDom");
 }
