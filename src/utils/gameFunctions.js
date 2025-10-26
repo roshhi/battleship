@@ -96,3 +96,50 @@ export function addSounds(){
         counter++;
     })
 }
+
+export function displayMissMsg(){
+
+    const getMsgDisplayPara = document.querySelector(".display-message");
+    const missMessages = [
+        "Admiral, that shot missed the target!",
+        "Negative hit, Admiral — water strike confirmed.",
+        "No contact, Admiral. The enemy remains hidden.",
+        "Admiral, our cannons hit nothing but waves!",
+        "Splash only, Admiral — no damage dealt.",
+        "Admiral, coordinates off by a few meters. Try again!",
+        "All clear, Admiral. No enemy vessel detected.",
+        "Missed, Admiral. Adjust your aim and fire again.",
+        "Admiral, the shot went wide — enemy untouched.",
+        "Our torpedoes missed, Admiral. Recalculating trajectory.",
+        "No impact, Admiral. Enemy still operational.",
+        "Admiral, the shot landed in open sea.",
+        "Target not found, Admiral. We’re firing blind!",
+        "Admiral, our artillery overshot the target!",
+        "Admiral, that’s a clean miss — better luck next time."
+    ];
+    const message = missMessages[Math.floor(Math.random() * missMessages.length)];
+    getMsgDisplayPara.textContent= message;
+}
+export function displayHitMsg(){
+
+    const getMsgDisplayPara = document.querySelector(".display-message");
+    const hitMessages = [
+        "Direct hit, Admiral! Enemy vessel taking damage!",
+        "Bullseye, Admiral — we’ve struck the target!",
+        "Confirmed impact, Admiral! That one’s gonna leave a mark.",
+        "Admiral, our cannons found their mark!",
+        "Hit confirmed, Admiral! Enemy ship listing!",
+        "Admiral, beautiful shot! Target hit square on.",
+        "Enemy vessel struck, Admiral — flames spotted!",
+        "Admiral, we’ve breached their hull!",
+        "Excellent aim, Admiral! That shot connected perfectly.",
+        "Admiral, another solid hit! Enemy defenses weakening.",
+        "Impact confirmed, Admiral! Enemy crew in disarray.",
+        "Admiral, we’ve got smoke rising from the target!",
+        "Direct hit, Admiral — target’s structure compromised!",
+        "Admiral, your precision is unmatched. That’s a hit!",
+        "Solid strike, Admiral! We’re breaking through their line."
+    ];
+    const message = hitMessages[Math.floor(Math.random() * hitMessages.length)];
+    getMsgDisplayPara.textContent= message;
+}
