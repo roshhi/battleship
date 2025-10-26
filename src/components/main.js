@@ -8,8 +8,10 @@ import carrierShipPic from "../assets/images/carrier.png";
 import cruiserShipPic from "../assets/images/cruiser.png";
 import submarineShipPic from "../assets/images/submarine.png";
 import destroyerShipPic from "../assets/images/destroyer.png";
-import crossPic from "../assets/images/cross.png"
+import crossPic from "../assets/images/hit.png"
 import missPic from "../assets/images/miss.png"
+import playerPic from "../assets/images/player.png"
+import { displayMissMsg,displayHitMsg } from "../utils/gameFunctions.js";
 
 export default function main() {
     
@@ -76,6 +78,12 @@ export default function main() {
         resetContainer();
     })
 
+    // Creating message display div
+
+    const getMsgDisplay = createDiv(getMainContent,'msg-main');
+    createImage(getMsgDisplay,playerPic,"player-image");
+    createPara(getMsgDisplay,"display-message","Admiral click on the enemy grid to attack !")
+
     // Calling add sounds function
     addSounds();
 
@@ -110,6 +118,11 @@ function initialize_player_selection_board(){
 
 // Function to initialize enemy board.
 function initialize_enemy_selection_board(){
+
+    //Getting miss and hit audios
+    const missShotAudio = document.getElementById('missShot');
+    const hitShotAudio = document.getElementById('hitShot');
+
     const getEnemyBoard = document.querySelector(".enemyBoard");
     const rows = 10;
     const cols = 10;
@@ -182,19 +195,25 @@ function initialize_enemy_selection_board(){
             cell.addEventListener('click',()=>{
                 if(cell.dataset.occupied == 'true'){
                     cell.style.backgroundImage = `url('${crossPic}')`;
-                    cell.style.backgroundSize = "70%"; 
-                    cell.style.padding = "10px";
+                    cell.style.backgroundSize = "cover"; 
                     cell.style.backgroundPosition = "center";
                     cell.style.backgroundRepeat = "no-repeat"; 
                     cell.style.pointerEvents = "none";  
+                    displayHitMsg();
+                    missShotAudio.pause();
+                    hitShotAudio.currentTime = 0;
+                    hitShotAudio.play();
                 }
                 else if(cell.dataset.occupied == 'false'){
                     cell.style.backgroundImage = `url('${missPic}')`;
-                    cell.style.backgroundSize = "70%"; 
+                    cell.style.backgroundSize = "cover"; 
                     cell.style.backgroundRepeat = "no-repeat";   
                     cell.style.backgroundPosition = "center";
-                    cell.style.filter = "brightness(0) invert(1)";
                     cell.style.pointerEvents = "none";
+                    displayMissMsg();
+                    hitShotAudio.pause();
+                    missShotAudio.currentTime = 0;
+                    missShotAudio.play();
                 }
             })
             getEnemyBoard.appendChild(cell);
@@ -355,9 +374,12 @@ function startGame(){
     const getResetStartContainer = document.querySelector(".reset-start-container");
     const getShipSelectionBorad = document.querySelector(".ships-selection");
     const getEnemyBoard = document.querySelector(".enemyBoard");
+    const getMsgDisplay = document.querySelector(".msg-main");
+
 
     getAxisContainer.classList.add("hide");
     getResetStartContainer.classList.add("hide");
     getShipSelectionBorad.classList.add("removeDom");
     getEnemyBoard.classList.add("addDom");
+    getMsgDisplay.classList.add("show");
 }
