@@ -34,13 +34,8 @@ export function getDraggedImage(){
     const dragState = { id: null };
     document.querySelectorAll(".ships-selection img").forEach(img => {
         img.draggable = true;
-        // img.style.border = '2px solid red'
         img.addEventListener("dragstart", (e) => {
             dragState.id = e.target.id;
-        });
-        img.addEventListener("dragend", () => {
-            img.classList.add('hide')
-            dragState.id = null;
         });
     });
     return dragState;
