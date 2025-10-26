@@ -143,3 +143,98 @@ export function displayHitMsg(){
     const message = hitMessages[Math.floor(Math.random() * hitMessages.length)];
     getMsgDisplayPara.textContent= message;
 }
+
+export function checkEnemyShipDestroyed(){
+
+    let carrierCount=0;
+    let battleCount=0;
+    let cruiserCount=0;
+    let submarineCount=0;
+    let destroyerCount=0;
+
+    return function check(){
+
+        const statusMain = document.querySelector('.status-main');
+        const getStatusDisplayPara = document.querySelector(".status-message");
+
+        // --- Carrier ---
+        const carrierCells = document.querySelectorAll(".carrier-cell");
+        const allCarrierHit = Array.from(carrierCells).every(cell => cell.classList.contains("hit"));
+        if(carrierCount==0){
+            if (carrierCells.length > 0 && allCarrierHit) {
+                getStatusDisplayPara.textContent= "Enemy Carrier Ship (5f) destroyed!";
+                if(!statusMain.classList.contains("show")){
+                    statusMain.classList.add('show');
+                }
+                statusMain.style.animation = 'none';
+                void statusMain.offsetWidth; 
+                statusMain.style.animation = "slideMessage 4s forwards";
+                carrierCount=1;
+            }
+        }
+
+        // --- Battleship ---
+        const battleshipCells = document.querySelectorAll(".battleship-cell");
+        const allBattleshipHit = Array.from(battleshipCells).every(cell => cell.classList.contains("hit"));
+        if(battleCount==0){
+            if (battleshipCells.length > 0 && allBattleshipHit) {
+                getStatusDisplayPara.textContent= "Enemy BattleShip (4f) has been sunk!";
+                if(!statusMain.classList.contains("show")){
+                    statusMain.classList.add('show');
+                }
+                statusMain.style.animation = 'none';
+                void statusMain.offsetWidth; 
+                statusMain.style.animation = "slideMessage 4s forwards";
+                battleCount=1;
+            }
+        }   
+
+        // --- Cruiser ---
+        const cruiserCells = document.querySelectorAll(".cruiser-cell");
+        const allCruiserHit = Array.from(cruiserCells).every(cell => cell.classList.contains("hit"));
+        if(cruiserCount==0){
+            if (cruiserCells.length > 0 && allCruiserHit) {
+                getStatusDisplayPara.textContent= "Enemy CRUISER (3f) has been sunk!";
+                if(!statusMain.classList.contains("show")){
+                    statusMain.classList.add('show');
+                }
+                statusMain.style.animation = 'none';
+                void statusMain.offsetWidth; 
+                statusMain.style.animation = "slideMessage 4s forwards";
+                cruiserCount=1
+            }
+        }
+
+        // --- Submarine ---
+        const submarineCells = document.querySelectorAll(".submarine-cell");
+        const allSubmarineHit = Array.from(submarineCells).every(cell => cell.classList.contains("hit"));
+        if(submarineCount==0){
+            if (submarineCells.length > 0 && allSubmarineHit) {
+                getStatusDisplayPara.textContent= "Enemy SUBMARINE (3f) destroyed!";
+                if(!statusMain.classList.contains("show")){
+                    statusMain.classList.add('show');
+                }
+                statusMain.style.animation = 'none';
+                void statusMain.offsetWidth; 
+                statusMain.style.animation = "slideMessage 4s forwards";
+                submarineCount=1;
+            }
+        }
+        
+        // --- Destroyer ---
+        const destroyerCells = document.querySelectorAll(".destroyer-cell");
+        const allDestroyerHit = Array.from(destroyerCells).every(cell => cell.classList.contains("hit"));
+        if(destroyerCount==0){
+            if (destroyerCells.length > 0 && allDestroyerHit) {
+                getStatusDisplayPara.textContent= "Enemy Destroyer (2f) has been sunk!";
+                if(!statusMain.classList.contains("show")){
+                    statusMain.classList.add('show');
+                }
+                statusMain.style.animation = 'none';
+                void statusMain.offsetWidth; 
+                statusMain.style.animation = "slideMessage 4s forwards";
+                destroyerCount=1;
+            }
+        }
+    }
+}

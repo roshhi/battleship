@@ -555,7 +555,7 @@ img.boat {
       0 0 25px rgba(255, 191, 0, 0.8);
     box-shadow: 0 0 20px rgba(255, 255, 255, 0.7);
 }
-.msg-main{
+.msg-main,.status-main{
     position: absolute;
     top: 9%;
     left: 50%;
@@ -572,10 +572,34 @@ img.boat {
     visibility: hidden;
     opacity: 0;
 }
+.status-main {
+    top: 80%;
+    left: -100%; 
+}
 .player-image{
     height: 50px;
     width: 50px;
 }
+
+@keyframes slideMessage {
+    0% {
+        left: -100%;
+        transform: translateX(0);
+    }
+    20% {
+        left: 50%;
+        transform: translateX(-50%); /* center the element */
+    }
+    80% {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    100% {
+        left: 110%;   /* move offscreen right */
+        transform: translateX(0);
+    }
+}
+  
 /* .display-message {
     overflow: hidden;          
     border-right: .15em solid rgb(221, 220, 220);
@@ -594,7 +618,7 @@ img.boat {
 } */
 
 @media (min-width: 868px) {
-    .msg-main{
+    .msg-main,.status-main{
         width: 40vw;
         font-size: clamp(1rem,2vw,1.5rem);
         gap: 20px;
@@ -610,6 +634,9 @@ img.boat {
         height: 80%;
         align-items: center;
     }
+    .mainContent{
+        overflow-y: visible;
+    }
     .playerBoard,.enemyBoard{
         width: 100%;
         min-height: 400px;
@@ -622,7 +649,6 @@ img.boat {
         height: 100%;
         margin-top: 10px;
         margin-bottom: 10px;
-
     }
     .ships-selection{
         display: grid;
@@ -649,14 +675,18 @@ img.boat {
     }
     .main-container{
         width: 100%;
-        height: 80%;
+        height: auto!important;
         align-items: center;
+        overflow-y: scroll;
     }
 }
 @media (max-width: 375px) {
     .mainContent{
         height: 105vh;
         overflow-x: scroll;
+    }
+    .main-container{
+        height: auto!important;
     }
     body{
         background: radial-gradient(circle at center, #002244, #000000);

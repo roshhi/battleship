@@ -11,7 +11,7 @@ import destroyerShipPic from "../assets/images/destroyer.png";
 import crossPic from "../assets/images/hit.png"
 import missPic from "../assets/images/miss.png"
 import playerPic from "../assets/images/player.png"
-import { displayMissMsg,displayHitMsg } from "../utils/gameFunctions.js";
+import { displayMissMsg,displayHitMsg,checkEnemyShipDestroyed } from "../utils/gameFunctions.js";
 
 export default function main() {
     
@@ -79,10 +79,14 @@ export default function main() {
     })
 
     // Creating message display div
-
     const getMsgDisplay = createDiv(getMainContent,'msg-main');
     createImage(getMsgDisplay,playerPic,"player-image");
     createPara(getMsgDisplay,"display-message","Admiral click on the enemy grid to attack !")
+
+    // Creating ship status message display div
+    const getShipStatus = createDiv(getMainContent,'status-main');
+    createImage(getShipStatus,playerPic,"player-image");
+    createPara(getShipStatus,"status-message","Admiral click on the enemy grid to attack !")
 
     // Calling add sounds function
     addSounds();
@@ -122,7 +126,7 @@ function initialize_enemy_selection_board(){
     //Getting miss and hit audios
     const missShotAudio = document.getElementById('missShot');
     const hitShotAudio = document.getElementById('hitShot');
-
+    const shipStatusCheck = checkEnemyShipDestroyed();
     const getEnemyBoard = document.querySelector(".enemyBoard");
     const rows = 10;
     const cols = 10;
@@ -166,26 +170,31 @@ function initialize_enemy_selection_board(){
 
             if(r == randomCarrierRow && c == randomCarrierPos && carrierCount!=5){
                 cell.dataset.occupied = true;
+                cell.classList.add("carrier-cell");
                 carrierCount++;
                 randomCarrierPos++;
             }
             else if(r == randomBattleShipRow && c == randomBattleshipPos && battleCount!=4){
                 cell.dataset.occupied = true;
+                cell.classList.add("battleship-cell");
                 battleCount++;
                 randomBattleshipPos++;
             }
             else if(r == cruiserRow && c == randomCruiserPos && cruiserCount!=3){
                 cell.dataset.occupied = true;
+                cell.classList.add("cruiser-cell");
                 cruiserRow++;
                 cruiserCount++;
             }
             else if(r == submarineRow && c == randomSubmarinePos && submarineCount!=3){
                 cell.dataset.occupied = true;
+                cell.classList.add("submarine-cell");
                 submarineRow++;
                 submarineCount++;
             }
             else if(r == randomDestroyerShipRow && c == randomDestroyerPos && destroyerCount!=2){
                 cell.dataset.occupied = true;
+                cell.classList.add("destroyer-cell");
                 randomDestroyerPos++;
                 destroyerCount++;
             }
@@ -199,10 +208,12 @@ function initialize_enemy_selection_board(){
                     cell.style.backgroundPosition = "center";
                     cell.style.backgroundRepeat = "no-repeat"; 
                     cell.style.pointerEvents = "none";  
+                    cell.classList.add("hit");
                     displayHitMsg();
                     missShotAudio.pause();
                     hitShotAudio.currentTime = 0;
                     hitShotAudio.play();
+                    shipStatusCheck();
                 }
                 else if(cell.dataset.occupied == 'false'){
                     cell.style.backgroundImage = `url('${missPic}')`;
@@ -210,6 +221,7 @@ function initialize_enemy_selection_board(){
                     cell.style.backgroundRepeat = "no-repeat";   
                     cell.style.backgroundPosition = "center";
                     cell.style.pointerEvents = "none";
+                    cell.classList.add("miss");
                     displayMissMsg();
                     hitShotAudio.pause();
                     missShotAudio.currentTime = 0;
@@ -375,7 +387,6 @@ function startGame(){
     const getShipSelectionBorad = document.querySelector(".ships-selection");
     const getEnemyBoard = document.querySelector(".enemyBoard");
     const getMsgDisplay = document.querySelector(".msg-main");
-
 
     getAxisContainer.classList.add("hide");
     getResetStartContainer.classList.add("hide");
