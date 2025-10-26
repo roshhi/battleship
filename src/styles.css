@@ -398,8 +398,8 @@ body{
     left: 40px;
 }
 .main-back-img{
-    width: 50px;
-    height: 50px;
+    width: 25px;
+    height: 25px;
 }
 .main-back-img:hover{
     transform: scale(1.1);
@@ -453,6 +453,10 @@ body{
     box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
     display: none;
     margin-left: 25px;
+}
+.enemyBoard .cell{
+    border: 1px solid rgb(0, 102, 255);
+
 }
 
 .cell{
@@ -551,8 +555,55 @@ img.boat {
       0 0 25px rgba(255, 191, 0, 0.8);
     box-shadow: 0 0 20px rgba(255, 255, 255, 0.7);
 }
+.msg-main{
+    position: absolute;
+    top: 9%;
+    left: 50%;
+    width: 90vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #f5f5f5;
+    border: 1px solid rgba(255, 191, 0, 0.8);
+    border-radius: 10px;
+    transform: translate(-50%);
+    font-family: 'nunito', cursive;
+    padding: 5px;
+    visibility: hidden;
+    opacity: 0;
+}
+.player-image{
+    height: 50px;
+    width: 50px;
+}
+/* .display-message {
+    overflow: hidden;          
+    border-right: .15em solid rgb(221, 220, 220);
+    white-space: nowrap;        
+    letter-spacing: 0.05em;
+    animation: typing 5s steps(80, end), blink-caret 0.75s step-end infinite;
+    width: 50%;      
+} */
+/* @keyframes typing {
+    from { width: 0 }
+    to { width: 50% }
+}
 
+@keyframes blink-caret {
+    50% { border-color: transparent }
+} */
 
+@media (min-width: 868px) {
+    .msg-main{
+        width: 40vw;
+        font-size: clamp(1rem,2vw,1.5rem);
+        gap: 20px;
+    }
+    .main-back-img{
+        width: 50px;
+        height: 50px;
+    }
+}
 @media (max-width: 768px) {
     .main-container{
         width: 70%;
