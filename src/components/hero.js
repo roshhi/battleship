@@ -33,6 +33,7 @@ export default function hero() {
     createPara(getInstructionDiv,"instruction-text","▸ Sink all enemy ships before they sink yours by finding all their positions.");
     createPara(getInstructionDiv,"instruction-text-heading","⚓ Tip");
     createPara(getInstructionDiv,"instruction-text","▸ When you hit part of a ship, try attacking the nearby cells (up, down, left, right) to find the rest of it.")
+    createPara(getInstructionDiv, "instruction-text", "▸ You will get a pop-up window when you completely destroy an enemy ship. Until then, keep attacking nearby cells when you find a target.");
 
     const getInstBackBtn = createDiv(getMenu,"instruction-back-btn");
     createPara(getInstBackBtn,"inst-back-btn-txt","Go back");
