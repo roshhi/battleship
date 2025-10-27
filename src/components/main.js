@@ -68,6 +68,7 @@ export default function main() {
     getStartContainer.style.pointerEvents = "none";
 
     getStartContainer.addEventListener('click',()=>{
+        getBackBtn.classList.add('hide');
         startGame();
     })
     const getResetContainer = createDiv(getResetStartContainer,"reset-container");
@@ -421,10 +422,8 @@ function placeImage(){
     }
  
 }
-
-
+// Function to start the game on pressing start button.
 function startGame(){
-
     const getAxisContainer = document.querySelector(".axis-container");
     const getResetStartContainer = document.querySelector(".reset-start-container");
     const getShipSelectionBorad = document.querySelector(".ships-selection");
