@@ -11,7 +11,8 @@ import destroyerShipPic from "../assets/images/destroyer.png";
 import crossPic from "../assets/images/hit.png"
 import missPic from "../assets/images/miss.png"
 import playerPic from "../assets/images/player.png"
-import { displayMissMsg,displayHitMsg,checkEnemyShipDestroyed } from "../utils/gameFunctions.js";
+import enemyPic from "../assets/images/enemy.png"
+import { displayMissMsg,displayHitMsg,checkEnemyShipDestroyed,enemyAttack } from "../utils/gameFunctions.js";
 
 export default function main() {
     
@@ -64,6 +65,7 @@ export default function main() {
 
     const getStartContainer = createDiv(getResetStartContainer,"start-container");
     createPara(getStartContainer,"start-game-button","Start");
+    getStartContainer.style.pointerEvents = "none";
 
     getStartContainer.addEventListener('click',()=>{
         startGame();
@@ -85,8 +87,20 @@ export default function main() {
 
     // Creating ship status message display div
     const getShipStatus = createDiv(getMainContent,'status-main');
-    createImage(getShipStatus,playerPic,"player-image");
-    createPara(getShipStatus,"status-message","Admiral click on the enemy grid to attack !")
+    createImage(getShipStatus,enemyPic,"player-image");
+    createPara(getShipStatus,"status-message","");
+
+    const getGameEndDiv = createDiv(getContainer,'game-end');
+    const gameOverMsgDiv = createDiv(getGameEndDiv,'gameOverMsgMain');
+    createImage(gameOverMsgDiv,playerPic,'win-msg-pic');
+    createPara(gameOverMsgDiv,'win-msg','VICTORY !')
+    const getBackToHomeDiv = createDiv(getGameEndDiv,'home-btn-div');
+    const getHomeBtn = createDiv(getBackToHomeDiv,'home-btn');
+    createPara(getHomeBtn,'home-btn-text',"Home")
+
+    getBackToHomeDiv.addEventListener('click',()=>{
+        window.location.reload();
+    })
 
     // Calling add sounds function
     addSounds();
@@ -95,7 +109,8 @@ export default function main() {
     initialize_player_selection_board();
     initialize_enemy_selection_board();
     highlightCells();
-    placeImage();
+    const place = placeImage();
+    place();
 }
 
 // -------------------------------- Fucnctions definition starts from here ------------------------------------
@@ -127,6 +142,7 @@ function initialize_enemy_selection_board(){
     const missShotAudio = document.getElementById('missShot');
     const hitShotAudio = document.getElementById('hitShot');
     const shipStatusCheck = checkEnemyShipDestroyed();
+    const enemyAttackCall = enemyAttack();
     const getEnemyBoard = document.querySelector(".enemyBoard");
     const rows = 10;
     const cols = 10;
@@ -201,8 +217,14 @@ function initialize_enemy_selection_board(){
             else{
                 cell.dataset.occupied = false;
             }
+            
+            
             cell.addEventListener('click',()=>{
+
+                getEnemyBoard.style.pointerEvents = 'none';
+
                 if(cell.dataset.occupied == 'true'){
+                    getEnemyBoard.style.pointerEvents = 'auto';
                     cell.style.backgroundImage = `url('${crossPic}')`;
                     cell.style.backgroundSize = "cover"; 
                     cell.style.backgroundPosition = "center";
@@ -216,6 +238,7 @@ function initialize_enemy_selection_board(){
                     shipStatusCheck();
                 }
                 else if(cell.dataset.occupied == 'false'){
+                    getEnemyBoard.style.pointerEvents = 'none';
                     cell.style.backgroundImage = `url('${missPic}')`;
                     cell.style.backgroundSize = "cover"; 
                     cell.style.backgroundRepeat = "no-repeat";   
@@ -226,7 +249,15 @@ function initialize_enemy_selection_board(){
                     hitShotAudio.pause();
                     missShotAudio.currentTime = 0;
                     missShotAudio.play();
+
+                    setTimeout(()=>{
+                        enemyAttackCall();
+                    },1500)
                 }
+
+                setTimeout(() => {
+                    getEnemyBoard.style.pointerEvents = 'auto';
+                }, 1000);
             })
             getEnemyBoard.appendChild(cell);
         }
@@ -299,84 +330,96 @@ function highlightCells(){
 // Function to place the image over the cells.
 function placeImage(){
 
-    let axis = "x";
+    let placeShipCount = 0;
 
-    document.querySelector(".Xaxis-container").addEventListener("click",()=>{
-        axis = "x";
-    })
-    document.querySelector(".Yaxis-container").addEventListener("click",()=>{
-        axis = "y";
-    })
+    return function place(){
 
-    const getAllCells = document.querySelectorAll(".playerBoard div");
-    const dragState = getDraggedImage();
-
-    getAllCells.forEach(cell => {
-        const startRow = parseInt(cell.dataset.row);
-        const startCol = parseInt(cell.dataset.col);
-
-        cell.addEventListener("drop", (e) => {
-            e.preventDefault();
-
-            // Getting the ship image which is being dragged via its id
-            const draggedId = dragState.id;
-            const draggedElement = document.getElementById(draggedId);
-
-            const cols = 10;
-            const rows = 10;
-
-            let shipLength = getShipLength(draggedId); // Getting the length of ship image which is being dragged.
-
+        let axis = "x";
+        document.querySelector(".Xaxis-container").addEventListener("click",()=>{
+            axis = "x";
+        })
+        document.querySelector(".Yaxis-container").addEventListener("click",()=>{
+            axis = "y";
+        })
     
-            // Collect target cells
-            const targetCells = [];
-
-            if(axis=="x"){
-                for (let i = 0; i < shipLength; i++) {
-                    const targetCol = startCol + i;
-                    if (targetCol >= cols) break;
-                    const targetCell = document.querySelector(
-                        `.cell[data-row='${startRow}'][data-col='${targetCol}']`
-                    );
-                    if (targetCell) targetCells.push(targetCell);
+        const getAllCells = document.querySelectorAll(".playerBoard div");
+        const dragState = getDraggedImage();
+    
+        getAllCells.forEach(cell => {
+            const startRow = parseInt(cell.dataset.row);
+            const startCol = parseInt(cell.dataset.col);
+    
+            cell.addEventListener("drop", (e) => {
+                e.preventDefault();
+    
+                // Getting the ship image which is being dragged via its id
+                const draggedId = dragState.id;
+                const draggedElement = document.getElementById(draggedId);
+    
+                const cols = 10;
+                const rows = 10;
+    
+                let shipLength = getShipLength(draggedId); // Getting the length of ship image which is being dragged.
+    
+        
+                // Collect target cells
+                const targetCells = [];
+    
+                if(axis=="x"){
+                    for (let i = 0; i < shipLength; i++) {
+                        const targetCol = startCol + i;
+                        if (targetCol >= cols) break;
+                        const targetCell = document.querySelector(
+                            `.cell[data-row='${startRow}'][data-col='${targetCol}']`
+                        );
+                        if (targetCell) targetCells.push(targetCell);
+                    }
                 }
-            }
-            else{
-                for (let i = 0; i < shipLength; i++) {
-
-                    const targetRow = startRow + i; 
-                    if (targetRow >= rows) break;
-
-                    const targetCell = document.querySelector(
-                        `.cell[data-row='${targetRow}'][data-col='${startCol}']`
-                    );
-                    if (targetCell) targetCells.push(targetCell);
+                else{
+                    for (let i = 0; i < shipLength; i++) {
+    
+                        const targetRow = startRow + i; 
+                        if (targetRow >= rows) break;
+    
+                        const targetCell = document.querySelector(
+                            `.cell[data-row='${targetRow}'][data-col='${startCol}']`
+                        );
+                        if (targetCell) targetCells.push(targetCell);
+                    }
                 }
-            }
+                
+                // Check validity: all must be free
+                const valid = targetCells.length === shipLength &&
+                              targetCells.every(c => c.dataset.occupied === "false");
             
-            // Check validity: all must be free
-            const valid = targetCells.length === shipLength &&
-                          targetCells.every(c => c.dataset.occupied === "false");
-        
-            if (!valid) {
-              alert("Invalid placement!");
-              document.querySelectorAll(".cell.highlight").forEach(c => c.classList.remove("highlight"));
-              return;
-            }
-            else{
-                draggedElement.classList.add('hide');
-                dragState.id = null;
-            }
-        
-            // Mark as occupied
-            targetCells.forEach(c => {
-              c.dataset.occupied = "true";
-              c.classList.remove("highlight");
+                if (!valid) {
+                  alert("Invalid placement!");
+                  document.querySelectorAll(".cell.highlight").forEach(c => c.classList.remove("highlight"));
+                  return;
+                }
+                else{
+                    draggedElement.classList.add('hide');
+                    dragState.id = null;
+                    placeShipCount++;
+                    console.log(placeShipCount)
+                    if(placeShipCount==5){
+                        const getStartButton = document.querySelector('.start-container')
+                        getStartButton.style.pointerEvents = "auto";
+                        console.log(placeShipCount)
+                    }
+                }
+            
+                // Mark as occupied
+                targetCells.forEach(c => {
+                  c.dataset.occupied = "true";
+                  c.classList.remove("highlight");
+                });
+                draggedElement.draggable = false;
+                colorGridCells(targetCells);
             });
-            draggedElement.draggable = false;
-            colorGridCells(targetCells);
-        });
-    });  
+        }); 
+    }
+ 
 }
 
 

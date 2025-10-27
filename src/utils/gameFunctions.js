@@ -1,4 +1,7 @@
 import { createDiv,createImage,createPara } from "./domFunctions";
+import crossPic from "../assets/images/hit.png"
+import missPic from "../assets/images/miss.png"
+import enemyPic from "../assets/images/enemy.png"
 
 // Function to create a ship container.
 export function createShipContainer(appendTo,shipPic,shipClassName,shipTitle,shipId){
@@ -220,7 +223,7 @@ export function checkEnemyShipDestroyed(){
                 submarineCount=1;
             }
         }
-        
+
         // --- Destroyer ---
         const destroyerCells = document.querySelectorAll(".destroyer-cell");
         const allDestroyerHit = Array.from(destroyerCells).every(cell => cell.classList.contains("hit"));
@@ -235,6 +238,146 @@ export function checkEnemyShipDestroyed(){
                 statusMain.style.animation = "slideMessage 4s forwards";
                 destroyerCount=1;
             }
+        }
+
+        if(carrierCount ==1 && battleCount==1 && cruiserCount==1 && submarineCount==1 && destroyerCount==1){
+            const getMain = document.querySelector('.mainContent');
+            const getGameEnd = document.querySelector('.game-end');
+        
+            getMain.classList.remove('show');
+            getGameEnd.classList.add('show')
+            console.log("Victory !")
+        }
+    }
+}
+
+
+
+export function enemyAttack() {
+
+    const getEnemyBoard = document.querySelector(".enemyBoard");
+    const generatedNumbers = [];
+    const focusTargets = [];
+    const getPlayerBoardCells = document.querySelectorAll(".playerBoard div");
+    const missShotAudio = document.getElementById('missShot');
+    const hitShotAudio = document.getElementById('hitShot');
+    let sunkCellCount = 0;
+    // Helper: mark a cell as hit
+    function markHit(cell) {
+        getEnemyBoard.style.pointerEvents = 'none';
+        cell.style.backgroundImage = `url('${crossPic}')`;
+        cell.style.backgroundSize = "cover";
+        cell.style.backgroundPosition = "center";
+        cell.style.backgroundRepeat = "no-repeat";
+        cell.style.backgroundColor = 'transparent';
+        cell.classList.add("sunk");
+        hitShotAudio.currentTime = 0;
+        hitShotAudio.play();
+        sunkCellCount++;
+    }
+
+    // Helper: mark a cell as miss
+    function markMiss(cell) {
+        getEnemyBoard.style.pointerEvents = 'auto';
+        cell.style.backgroundImage = `url('${missPic}')`;
+        cell.style.backgroundSize = "cover";
+        cell.style.backgroundPosition = "center";
+        cell.style.backgroundRepeat = "no-repeat";
+        missShotAudio.currentTime = 0;
+        missShotAudio.play();
+    }
+
+    // Helper: safely get cell by row and col
+    function getCell(r, c) {
+        return document.querySelector(`.cell[data-row='${r}'][data-col='${c}']`);
+    }
+
+    return function attack(focusMode = false) {
+        if(sunkCellCount==17){
+            const getMain = document.querySelector('.mainContent');
+            const getGameEnd = document.querySelector('.game-end');
+            const getPara = document.querySelector('.win-msg');
+            const getImg = document.querySelector('.win-msg-pic');
+            getImg.src = enemyPic;
+            getMain.classList.remove('show');
+            getPara.textContent = 'Defeat !';
+            getGameEnd.classList.add('show')
+            
+        }
+        if (!focusMode) {
+            // Generate unique random cell index
+            let cellAttackOffset;
+            do {
+                cellAttackOffset = Math.floor(Math.random() * 100);
+            } while (
+                generatedNumbers.includes(cellAttackOffset) ||  // already attacked
+                getPlayerBoardCells[cellAttackOffset].classList.contains("sunk") // already sunk
+            );
+            generatedNumbers.push(cellAttackOffset);
+
+            const targetCell = getPlayerBoardCells[cellAttackOffset];
+
+            if (targetCell.dataset.occupied === 'true') {
+                // Add focus targets (up to 4 in each direction)
+                const cellRow = Number(targetCell.dataset.row);
+                const cellCol = Number(targetCell.dataset.col);
+
+                // 4 cells above
+                for (let i = 1; i <= 4; i++) {
+                    const target = getCell(cellRow - i, cellCol);
+                    if (!target || target.dataset.occupied == "false" || target.classList.contains("sunk")) break;
+                    else{
+                        if (target) focusTargets.push(target);
+                    }
+                }
+    
+                // 4 cells below
+                for (let i = 1; i <= 4; i++) {
+                    const target = getCell(cellRow + i, cellCol);
+                    if (!target || target.dataset.occupied == "false" || target.classList.contains("sunk")) break;
+                    else{
+                        if (target) focusTargets.push(target);
+                    }            
+                }
+    
+                // 4 cells left
+                for (let i = 1; i <= 4; i++) {
+                    const target = getCell(cellRow, cellCol - i);
+                    if (!target || target.dataset.occupied == "false" || target.classList.contains("sunk")) break;
+                    else{
+                        if (target) focusTargets.push(target);
+                    }            
+                }
+    
+                // 4 cells right
+                for (let i = 1; i <= 4; i++) {
+                    const target = getCell(cellRow, cellCol + i);
+                    if (!target || target.dataset.occupied == "false" || target.classList.contains("sunk")) break;
+                    else{
+                        if (target) focusTargets.push(target);
+                    }            
+                }
+                markHit(targetCell);
+
+                if (focusTargets.length > 0) {
+                    attack(true);
+                }
+
+            } else {
+                markMiss(targetCell);
+            }
+        } 
+        else if (focusMode) {
+            focusTargets.forEach((cell, index) => {
+                setTimeout(() => {
+                    markHit(cell);      
+                }, 1000 * (index + 1));
+            });
+            const totalDelay = 1000 * focusTargets.length;
+            focusTargets.length = 0; 
+            setTimeout(() => {
+                attack(false);
+            }, totalDelay + 500);
         }
     }
 }
