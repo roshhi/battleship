@@ -44,6 +44,7 @@ export function getDraggedImage(){
     return dragState;
 }
 
+// Function to reset the container after placing the ships on it.
 export function resetContainer(){
     const getAllCells = document.querySelectorAll(".playerBoard div");
     const xAxisContainer = document.querySelector(".Xaxis-container");
@@ -62,6 +63,7 @@ export function resetContainer(){
     });
 }
 
+// Function to add the sound effects on different clicks
 export function addSounds(){
     const music = document.getElementById('bgMusic');
     const click = document.getElementById('btnClick');
@@ -100,6 +102,7 @@ export function addSounds(){
     })
 }
 
+// Function to display messages on screen if player miss the shot
 export function displayMissMsg(){
 
     const getMsgDisplayPara = document.querySelector(".display-message");
@@ -123,6 +126,8 @@ export function displayMissMsg(){
     const message = missMessages[Math.floor(Math.random() * missMessages.length)];
     getMsgDisplayPara.textContent= message;
 }
+
+// Function to display messages on screen if player hit the target
 export function displayHitMsg(){
 
     const getMsgDisplayPara = document.querySelector(".display-message");
@@ -147,6 +152,7 @@ export function displayHitMsg(){
     getMsgDisplayPara.textContent= message;
 }
 
+// Function to check whether a particular enemy ship is destroyed or not to display pop up and check for win.
 export function checkEnemyShipDestroyed(){
 
     let carrierCount=0;
@@ -246,13 +252,12 @@ export function checkEnemyShipDestroyed(){
         
             getMain.classList.remove('show');
             getGameEnd.classList.add('show')
-            console.log("Victory !")
         }
     }
 }
 
 
-
+// Function for the enemy attack
 export function enemyAttack() {
 
     const getEnemyBoard = document.querySelector(".enemyBoard");
@@ -262,7 +267,7 @@ export function enemyAttack() {
     const missShotAudio = document.getElementById('missShot');
     const hitShotAudio = document.getElementById('hitShot');
     let sunkCellCount = 0;
-    // Helper: mark a cell as hit
+
     function markHit(cell) {
         getEnemyBoard.style.pointerEvents = 'none';
         cell.style.backgroundImage = `url('${crossPic}')`;
@@ -276,7 +281,6 @@ export function enemyAttack() {
         sunkCellCount++;
     }
 
-    // Helper: mark a cell as miss
     function markMiss(cell) {
         getEnemyBoard.style.pointerEvents = 'auto';
         cell.style.backgroundImage = `url('${missPic}')`;
@@ -287,7 +291,6 @@ export function enemyAttack() {
         missShotAudio.play();
     }
 
-    // Helper: safely get cell by row and col
     function getCell(r, c) {
         return document.querySelector(`.cell[data-row='${r}'][data-col='${c}']`);
     }
@@ -305,7 +308,7 @@ export function enemyAttack() {
             
         }
         if (!focusMode) {
-            // Generate unique random cell index
+
             let cellAttackOffset;
             do {
                 cellAttackOffset = Math.floor(Math.random() * 100);
@@ -318,7 +321,7 @@ export function enemyAttack() {
             const targetCell = getPlayerBoardCells[cellAttackOffset];
 
             if (targetCell.dataset.occupied === 'true') {
-                // Add focus targets (up to 4 in each direction)
+                
                 const cellRow = Number(targetCell.dataset.row);
                 const cellCol = Number(targetCell.dataset.col);
 
