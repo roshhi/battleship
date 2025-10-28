@@ -1,6 +1,8 @@
 # Battleship Game
 
-A modern, browser-based implementation of the classic **Battleship** strategy game — built with **HTML**, **CSS**, and **JavaScript**, and bundled using **Webpack** for a modular and efficient development workflow.
+The Battleship game challenges players to strategically position their ships on a grid and take turns firing at their opponent’s hidden fleet. The objective is simple: **sink all enemy ships before they sink yours**.
+
+This version features a clean UI, responsive layout, and modular architecture, making it both enjoyable to play and easy to maintain or extend.
 
 
 ## Preview
@@ -68,7 +70,7 @@ BATTLESHIP/
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/your-username/battleship.git
+git clone https://github.com/roshhi/battleship.git
 cd battleship
 ```
 
@@ -131,19 +133,11 @@ You are free to use, modify, and distribute this project with proper attribution
 
 ## Author
 
-Developed by **[Your Name]**  
-💡 Open for contributions and feedback.
+Developed by **roshhi**  
+Open for contributions and feedback.
 
 ---
 
-
-## Overview
-
-The Battleship game challenges players to strategically position their ships on a grid and take turns firing at their opponent’s hidden fleet. The objective is simple: **sink all enemy ships before they sink yours**.
-
-This version features a clean UI, responsive layout, and modular architecture, making it both enjoyable to play and easy to maintain or extend.
-
----
 ````
 
 
