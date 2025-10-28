@@ -114,13 +114,12 @@ Generates an optimized production build in the `dist/` folder.
 
 ---
 
-## Technologies Used
-
-| Technology | Purpose |
-|-------------|----------|
-| **JavaScript (ES6)** | Core logic and interactivity |
-| **Webpack** | Module bundling and optimization |
-| **CSS3** | Styling and responsiveness |
+| Technology           | Purpose                                                                                            |
+| -------------------- | -------------------------------------------------------------------------------------------------- |
+| **JavaScript (ES6)** | Core logic, dynamic DOM creation, and interactivity                                                |
+| **Webpack**          | Module bundling and optimization                                                                   |
+| **CSS3**             | Styling and responsiveness                                                                         |
+| **HTML5**            | Minimal structure (only ~2.6% of the UI); almost all elements generated dynamically via JavaScript |
 
 ---
 
